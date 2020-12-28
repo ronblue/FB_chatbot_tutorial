@@ -58,6 +58,6 @@ DO
    ENDIF
    
 LOOP UNTIL text = "quit"
-PRINT "bot: goodbye!
+PRINT "bot: goodbye!"
 
 SLEEP
