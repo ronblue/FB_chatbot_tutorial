@@ -90,7 +90,7 @@ DATA "don't know"
 DATA "i'm sorry to hear that... hope your day will get better"
 DATA "well there are days like that cheer up!..."
 DATA "don't feel bad tomorrow is a new day!..."
-DATA "everyone has days like that just keep trying your best
+DATA "everyone has days like that just keep trying your best"
 
 'keywords2
 DATA "good"

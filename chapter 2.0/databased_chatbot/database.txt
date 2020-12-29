@@ -1,0 +1,28 @@
+
+
+k1:bad
+k1:awful
+k1:average
+k1:don't know
+
+r1:i'm sorry to hear that... hope your day will get better
+r1:well there are days like that cheer up!...
+r1:don't feel bad tomorrow is a new day!...
+r1:everyone has days like that just keep trying your best
+
+k2:good
+k2:wonderful
+k2:excellent
+k2:best day ever
+
+r2:i'm so happy for you!
+r2:that's great! can you tell me about your day?
+r2:what did you do today?
+r2:please tell me more :)
+
+d1:i see go on
+d1:that is interesting
+d1:how does that make you feel?
+d1:i understand
+
+e1:
