@@ -1,0 +1,3 @@
+Julie: all databases have been erased!
+user: quit
+Julie: goodbye!

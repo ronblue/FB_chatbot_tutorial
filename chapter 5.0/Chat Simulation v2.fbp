@@ -1,20 +1,20 @@
 [Project]
 Version=3
-Description=chapter 2.0
+Description=Chat Simulation v2
 Api=fb (FreeBASIC)
 [Make]
 Current=1
-1=Windows Console (debug),fbc -g -s console
+1=QB Console,fbc -lang qb -s console
 Recompile=2
 Module=Module Build,fbc -c
 [TabOrder]
 TabOrder=1,2
 [File]
-1=databased_chatbot.bas
-2=database.txt
+1=Chat Simulation v2.bas
+2=Chat Simulation v2.txt
 [BreakPoint]
 1=
 2=
 [FileInfo]
-1=0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1=0,71,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 2=0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

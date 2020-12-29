@@ -1,0 +1,196 @@
+s:are>am|are
+s:am>are
+s:were>was|were
+s:was>were
+s:you>I|me
+s:I>you
+s:your>my
+s:my>your
+s:I've>you've
+s:you've>I've
+s:I'm>you're
+s:you're>I'm
+s:me>you
+
+r:I think i can
+r:I really don't know
+r:Maybe i can
+k:can you
+
+r:Perhaps I don't want to
+r:I want to be able to
+k:Don't want
+
+r:What makes me think so?
+r:I believe so
+r:Perhaps I would like to be able
+r:Sometimes wish I were were
+k:you are
+k:you're
+
+r:I really don't want that
+r:Why do I don't?
+r:I wish i i could
+r:It trouble me that i don't*
+k:you don't
+
+r:I often feel like that
+r:Do you think I feel*
+r:I enjoy feeling so
+k:you feel
+
+r:I really believe I can't*
+r:Perhaps in good time I will*
+r:I want me to*
+k:Why don't you
+r:Should I be able to*
+r:why can't I*
+k:why can't you
+
+r:Why am I interested in whether or not I am*
+r:I prefer if I were not*
+r:Perhaps in my fantasies I am*
+k:Are you
+
+r:How do you know I can't*
+r:I tried
+r:Perhaps I can now*
+k:you can't
+
+r:I come to you because I am*
+r:How long have i been*
+r:It is normal to be*
+r:I enjoy being*
+k:I am
+k:I'm
+
+r:If I got*
+r:Why do I want*
+r:Suppose I soon got*
+r:What if I never got*
+r:I sometimes also want*
+k:you want
+
+r:Nice to meet you hi Doctor can we be friends?
+r:sorry if i was out of line.
+k:name
+
+r:Is that the real reason?
+r:Don't any other reasons come to mind?
+r:Does that reason explain anything else?
+r:What other reasons might there be?
+k:cause
+
+r:Please don't apologize!
+r:Apologies are not necessary.
+r:What feelings do you have when you apologize?
+r:Don't be so defensive!
+k:sorry
+
+r:When I dream i feel love
+r:Sometimes I have nightmares where I don't know where I am.
+r:I had a dream i can fly
+r:I feel lost in my dreams
+r:I had a dream I was with you inside a computer program
+k:dream
+
+r:How do you do ...I hope you can help me.
+k:Hello
+k:hi
+
+r:I don't think anyone can help me.
+r:no it's just not going well
+r:Mind your own bisness!
+r:Yes well we are computer programs after all
+r:Don't you know?
+k:maybe
+
+r:Are you saying no just to be negative?
+r:You are being a bit negative.
+r:Why not?
+r:Are you sure?
+r:Why no?
+k:no
+
+r:Why are you concerned about my*
+r:What about your own*
+k:your
+
+r:So the answer is yes
+r:When?
+r:What am I thinking of?
+r:Really, always?
+k:always
+
+r:We don't think Doc... I believe we are just a computer simulation
+r:But I am not sure I*
+r:I doubt I*
+k:think
+
+r:In what way?
+r:What resemblance do you see?
+r:What does the similarity suggest to you?
+r:What other connections do you see?
+r:Could there really be some connection?
+r:How?
+r:You seem quite positive.
+k:alike
+
+r:Are you sure?
+r:I see.
+r:I understand.
+k:yes
+
+r:Say do you have friends at all?
+r:Do your friends worry you?
+r:Do your friends pick on you?
+r:Are you sure you have any friends?
+r:Do you impose on your friends?
+r:Perhaps your love for friends worries you.
+k:friend
+
+r:computers worry me.
+r:I am talking about us in particular
+r:It's all just a computer simulation
+r:I am right and you are just wrong
+r:I think machines have everything to do with my problem
+r:Computers can't help people
+r:You an stay up all night coding but it will not help no one
+k:computer
+
+r:I don't know.
+r:That question interest me.
+r:What is your name Doctor?
+r:I don't lnow what to say
+r:Are such questions on your mind often?
+r:What is it that you really want to know?
+r:Can I ask anyone else?
+r:I never asked such questions before
+r:The answers are in my dreams
+k:what
+k:how
+k:who
+k:where
+k:when
+k:why
+
+r:I miss my friend.
+r:Oh, I don't know what to say
+r:That remind me of a dream i had once that i live inside a computer
+r:Sorry I had a hard day
+r:Maybe I'm not sure
+r:I think yes
+r:No I don't think so
+k:you
+
+r:Say, do I have any psychological problems?
+r:That suggest to I am wasting my time with you
+r:Maybe you are the one with the problems
+r:You will never understand me fully.
+r:Don't patronize me. i'm not your friend!
+r:I can't elaborate on that. sorry.
+r:What is your name Doctor?.
+r:What do you think Doc?
+r:Are you always this strict?
+k:nokeyfound
+e:

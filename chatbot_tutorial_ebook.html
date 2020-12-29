@@ -1,0 +1,3133 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="generator" content="TiddlyWiki" />
+<meta name="tiddlywiki-version" content="5.1.9" />
+<meta name="format-detection" content="telephone=no">
+<link id="faviconLink" rel="shortcut icon" href="favicon.ico">
+<title>Let's Build a ChatBot with freeBASIC — A Tutorial by ronen blumberg (ron77)</title>
+<div id="styleArea">
+<style data-tiddler-title="$:/boot/boot.css" data-tiddler-type="text/css" type="text/css">/*
+Basic styles used before we boot up the parsing engine
+*/
+
+/*
+Error message and password prompt
+*/
+
+.tc-password-wrapper, .tc-error-form {
+    font-family: sans-serif;
+	z-index: 20000;
+	position: fixed;
+	text-align: center;
+	width: 200px;
+	top: 4em;
+    left: 50%;
+    margin-left: -144px; /* - width/2 - paddingHorz/2 - border */
+	padding: 16px 16px 16px 16px;
+	border-radius: 8px;
+}
+
+.tc-error-form {
+	color: #fff;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+	background-color: rgb(255, 75, 75);
+	border: 8px solid rgb(255, 0, 0);
+	width: 480px;
+    margin-left: -244px; /* - width/2 - paddingHorz/2 - border */
+}
+
+.tc-error-form div {
+	padding-bottom: 1em;
+}
+
+.tc-error-prompt {
+	color: #000;
+	text-shadow: none;
+}
+
+.tc-password-wrapper {
+	color: #000;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	background-color: rgb(197, 235, 183);
+	border: 8px solid rgb(164, 197, 152);
+}
+
+.tc-password-wrapper form {
+	text-align: left;
+}
+
+.tc-password-wrapper h1 {
+	font-size: 16px;
+	line-height: 20px;
+	padding-bottom: 16px;
+}
+
+.tc-password-wrapper input {
+	width: 100%;
+}
+</style>
+</div>
+<style type="text/css">
+
+.tc-help-panel {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width: 310px;
+	height: 400px;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+	
+  -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+     -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+
+	border: 1px solid #ffffff;
+	background: #ffffff;
+	padding: 1em;
+	margin: 0.5em;
+	z-index: 1000;
+}dl.tc-help-cheatsheet {
+	overflow: hidden;
+}dl.tc-help-cheatsheet .red {
+	color: red;
+}.tc-help-cheatsheet > dt {
+	display: block;
+	float: left;
+	clear: left;
+	margin: 2% 1em 0 0;
+	padding;
+	font-weight: normal;
+	width: 45%;
+}.tc-help-cheatsheet > dt > pre {
+	margin: 0;
+}.tc-help-cheatsheet > dd {
+	display: block;
+	float: left;
+	width: 45%;
+	margin: 1em 0 0 0;
+	padding: 0;
+}.tc-help-cheatsheet > dd > p,
+.tc-help-cheatsheet > dd > h1,
+.tc-help-cheatsheet > dd > pre,
+.tc-help-cheatsheet > dd > ul,
+.tc-help-cheatsheet > dd > ol,
+.tc-help-cheatsheet > dd > dl,
+.tc-help-cheatsheet > dd > table,
+.tc-help-cheatsheet > dd > blockquote,
+.tc-help-cheatsheet > dd > blockquote >p {
+	margin: 0;
+}.tc-help-cheatsheet .tc-image {
+	width: 16px;
+}
+
+
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #f0f0f0;
+  -webkit-text-size-adjust: none;
+}
+
+.hljs,
+.hljs-subst,
+.hljs-tag .hljs-title,
+.nginx .hljs-title {
+  color: black;
+}
+
+.hljs-string,
+.hljs-title,
+.hljs-constant,
+.hljs-parent,
+.hljs-tag .hljs-value,
+.hljs-rule .hljs-value,
+.hljs-preprocessor,
+.hljs-pragma,
+.hljs-name,
+.haml .hljs-symbol,
+.ruby .hljs-symbol,
+.ruby .hljs-symbol .hljs-string,
+.hljs-template_tag,
+.django .hljs-variable,
+.smalltalk .hljs-class,
+.hljs-addition,
+.hljs-flow,
+.hljs-stream,
+.bash .hljs-variable,
+.pf .hljs-variable,
+.apache .hljs-tag,
+.apache .hljs-cbracket,
+.tex .hljs-command,
+.tex .hljs-special,
+.erlang_repl .hljs-function_or_atom,
+.asciidoc .hljs-header,
+.markdown .hljs-header,
+.coffeescript .hljs-attribute,
+.tp .hljs-variable {
+  color: #800;
+}
+
+.smartquote,
+.hljs-comment,
+.hljs-annotation,
+.diff .hljs-header,
+.hljs-chunk,
+.asciidoc .hljs-blockquote,
+.markdown .hljs-blockquote {
+  color: #888;
+}
+
+.hljs-number,
+.hljs-date,
+.hljs-regexp,
+.hljs-literal,
+.hljs-hexcolor,
+.smalltalk .hljs-symbol,
+.smalltalk .hljs-char,
+.go .hljs-constant,
+.hljs-change,
+.lasso .hljs-variable,
+.makefile .hljs-variable,
+.asciidoc .hljs-bullet,
+.markdown .hljs-bullet,
+.asciidoc .hljs-link_url,
+.markdown .hljs-link_url {
+  color: #080;
+}
+
+.hljs-label,
+.ruby .hljs-string,
+.hljs-decorator,
+.hljs-filter .hljs-argument,
+.hljs-localvars,
+.hljs-array,
+.hljs-attr_selector,
+.hljs-important,
+.hljs-pseudo,
+.hljs-pi,
+.haml .hljs-bullet,
+.hljs-doctype,
+.hljs-deletion,
+.hljs-envvar,
+.hljs-shebang,
+.apache .hljs-sqbracket,
+.nginx .hljs-built_in,
+.tex .hljs-formula,
+.erlang_repl .hljs-reserved,
+.hljs-prompt,
+.asciidoc .hljs-link_label,
+.markdown .hljs-link_label,
+.vhdl .hljs-attribute,
+.clojure .hljs-attribute,
+.asciidoc .hljs-attribute,
+.lasso .hljs-attribute,
+.coffeescript .hljs-property,
+.hljs-phony {
+  color: #88f;
+}
+
+.hljs-keyword,
+.hljs-id,
+.hljs-title,
+.hljs-built_in,
+.css .hljs-tag,
+.hljs-doctag,
+.smalltalk .hljs-class,
+.hljs-winutils,
+.bash .hljs-variable,
+.pf .hljs-variable,
+.apache .hljs-tag,
+.hljs-type,
+.hljs-typename,
+.tex .hljs-command,
+.asciidoc .hljs-strong,
+.markdown .hljs-strong,
+.hljs-request,
+.hljs-status,
+.tp .hljs-data,
+.tp .hljs-io {
+  font-weight: bold;
+}
+
+.asciidoc .hljs-emphasis,
+.markdown .hljs-emphasis,
+.tp .hljs-units {
+  font-style: italic;
+}
+
+.nginx .hljs-built_in {
+  font-weight: normal;
+}
+
+.coffeescript .javascript,
+.javascript .xml,
+.lasso .markup,
+.tex .hljs-formula,
+.xml .javascript,
+.xml .vbscript,
+.xml .css,
+.xml .hljs-cdata {
+  opacity: 0.5;
+}
+
+
+.hljs{display:block;overflow-x:auto;padding:.5em;color:#333;background:#f8f8f8;-webkit-text-size-adjust:none}.hljs-comment,.diff .hljs-header,.hljs-javadoc{color:#998;font-style:italic}.hljs-keyword,.css .rule .hljs-keyword,.hljs-winutils,.nginx .hljs-title,.hljs-subst,.hljs-request,.hljs-status{color:#333;font-weight:bold}.hljs-number,.hljs-hexcolor,.ruby .hljs-constant{color:teal}.hljs-string,.hljs-tag .hljs-value,.hljs-phpdoc,.hljs-dartdoc,.tex .hljs-formula{color:#d14}.hljs-title,.hljs-id,.scss .hljs-preprocessor{color:#900;font-weight:bold}.hljs-list .hljs-keyword,.hljs-subst{font-weight:normal}.hljs-class .hljs-title,.hljs-type,.vhdl .hljs-literal,.tex .hljs-command{color:#458;font-weight:bold}.hljs-tag,.hljs-tag .hljs-title,.hljs-rule .hljs-property,.django .hljs-tag .hljs-keyword{color:navy;font-weight:normal}.hljs-attribute,.hljs-variable,.lisp .hljs-body,.hljs-name{color:teal}.hljs-regexp{color:#009926}.hljs-symbol,.ruby .hljs-symbol .hljs-string,.lisp .hljs-keyword,.clojure .hljs-keyword,.scheme .hljs-keyword,.tex .hljs-special,.hljs-prompt{color:#990073}.hljs-built_in{color:#0086b3}.hljs-preprocessor,.hljs-pragma,.hljs-pi,.hljs-doctype,.hljs-shebang,.hljs-cdata{color:#999;font-weight:bold}.hljs-deletion{background:#fdd}.hljs-addition{background:#dfd}.diff .hljs-change{background:#0086b3}.hljs-chunk{color:#aaa}
+
+.tc-sidebar-header {
+	text-shadow: 0 1px 0 rgba(255,255,255, 0.8);
+}.tc-tiddler-info {
+	
+  -webkit-box-shadow: inset 1px 2px 3px rgba(0,0,0,0.1);
+     -moz-box-shadow: inset 1px 2px 3px rgba(0,0,0,0.1);
+          box-shadow: inset 1px 2px 3px rgba(0,0,0,0.1);
+
+}@media screen {
+	.tc-tiddler-frame {
+		
+  -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+     -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+          box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+
+	}
+}@media (max-width: 1280px) {
+	.tc-tiddler-frame {
+		
+  -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+
+	}
+}.tc-page-controls button svg, .tc-tiddler-controls button svg, .tc-topbar button svg {
+	
+  -webkit-transition: fill 150ms ease-in-out;
+     -moz-transition: fill 150ms ease-in-out;
+          transition: fill 150ms ease-in-out;
+
+}.tc-tiddler-controls button.tc-selected,
+.tc-page-controls button.tc-selected {
+	
+  -webkit-filter: drop-shadow(0px -1px 2px rgba(0,0,0,0.25));
+     -moz-filter: drop-shadow(0px -1px 2px rgba(0,0,0,0.25));
+          filter: drop-shadow(0px -1px 2px rgba(0,0,0,0.25));
+
+}.tc-tiddler-frame input.tc-edit-texteditor {
+	
+  -webkit-box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.15);
+     -moz-box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.15);
+          box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.15);
+
+}.tc-edit-tags {
+	
+  -webkit-box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.15);
+     -moz-box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.15);
+          box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.15);
+
+}.tc-tiddler-frame .tc-edit-tags input.tc-edit-texteditor {
+	
+  -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+
+	border: none;
+	outline: none;
+}canvas.tc-edit-bitmapeditor  {
+	
+  -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+     -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+
+}.tc-drop-down {
+	border-radius: 4px;
+	
+  -webkit-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+     -moz-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+          box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+
+}.tc-block-dropdown {
+	border-radius: 4px;
+	
+  -webkit-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+     -moz-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+          box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+
+}.tc-modal-displayed {
+	
+  -webkit-filter: blur(4px);
+     -moz-filter: blur(4px);
+          filter: blur(4px);
+
+}.tc-modal {
+	border-radius: 6px;
+	
+  -webkit-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+     -moz-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+          box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+
+}.tc-modal-footer {
+	border-radius: 0 0 6px 6px;
+	
+  -webkit-box-shadow: inset 0 1px 0 #fff;
+     -moz-box-shadow: inset 0 1px 0 #fff;
+          box-shadow: inset 0 1px 0 #fff;
+;
+}.tc-alert {
+	border-radius: 6px;
+	
+  -webkit-box-shadow: 0 3px 7px rgba(0,0,0,0.6);
+     -moz-box-shadow: 0 3px 7px rgba(0,0,0,0.6);
+          box-shadow: 0 3px 7px rgba(0,0,0,0.6);
+
+}.tc-notification {
+	border-radius: 6px;
+	
+  -webkit-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+     -moz-box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+          box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+
+	text-shadow: 0 1px 0 rgba(255,255,255, 0.8);
+}.tc-sidebar-lists .tc-tab-divider {
+	
+background-image: linear-gradient(left, rgb(216,216,216) 0%, rgb(236,236,236) 250px);
+background-image: -o-linear-gradient(left, rgb(216,216,216) 0%, rgb(236,236,236) 250px);
+background-image: -moz-linear-gradient(left, rgb(216,216,216) 0%, rgb(236,236,236) 250px);
+background-image: -webkit-linear-gradient(left, rgb(216,216,216) 0%, rgb(236,236,236) 250px);
+background-image: -ms-linear-gradient(left, rgb(216,216,216) 0%, rgb(236,236,236) 250px);
+
+}.tc-more-sidebar .tc-tab-buttons button {
+	
+background-image: linear-gradient(left, rgb(236,236,236) 0%, rgb(224,224,224) 100%);
+background-image: -o-linear-gradient(left, rgb(236,236,236) 0%, rgb(224,224,224) 100%);
+background-image: -moz-linear-gradient(left, rgb(236,236,236) 0%, rgb(224,224,224) 100%);
+background-image: -webkit-linear-gradient(left, rgb(236,236,236) 0%, rgb(224,224,224) 100%);
+background-image: -ms-linear-gradient(left, rgb(236,236,236) 0%, rgb(224,224,224) 100%);
+
+}.tc-more-sidebar .tc-tab-buttons button.tc-tab-selected {
+	
+background-image: linear-gradient(left, rgb(236,236,236) 0%, rgb(248,248,248) 100%);
+background-image: -o-linear-gradient(left, rgb(236,236,236) 0%, rgb(248,248,248) 100%);
+background-image: -moz-linear-gradient(left, rgb(236,236,236) 0%, rgb(248,248,248) 100%);
+background-image: -webkit-linear-gradient(left, rgb(236,236,236) 0%, rgb(248,248,248) 100%);
+background-image: -ms-linear-gradient(left, rgb(236,236,236) 0%, rgb(248,248,248) 100%);
+
+}.tc-message-box img {
+	
+  -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+     -moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+          box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+
+}.tc-plugin-info {
+	
+  -webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+     -moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+          box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+
+}
+
+
+/*
+** Start with the normalize CSS reset, and then belay some of its effects
+*//*! normalize.css v3.0.0 | MIT License | git.io/normalize */
+
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+
+body {
+  margin: 0;
+}
+
+/* HTML5 display definitions
+   ========================================================================== */
+
+/**
+ * Correct `block` display not defined in IE 8/9.
+ */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block;
+}
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9.
+ * Hide the `template` element in IE, Safari, and Firefox < 22.
+ */
+
+[hidden],
+template {
+  display: none;
+}
+
+/* Links
+   ========================================================================== */
+
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+
+a {
+  background: transparent;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Address styling not present in IE 8/9, Safari 5, and Chrome.
+ */
+
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
+ */
+
+b,
+strong {
+  font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari 5 and Chrome.
+ */
+
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari 5, and Chrome.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove border when inside `a` element in IE 8/9.
+ */
+
+img {
+  border: 0;
+}
+
+/**
+ * Correct overflow displayed oddly in IE 9.
+ */
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * Address margin not present in IE 8/9 and Safari 5.
+ */
+
+figure {
+  margin: 1em 40px;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+/**
+ * Contain overflow in all browsers.
+ */
+
+pre {
+  overflow: auto;
+}
+
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10.
+ */
+
+button {
+  overflow: visible;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8+, and Opera
+ * Correct `select` style inheritance in Firefox.
+ */
+
+button,
+select {
+  text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+input {
+  line-height: normal;
+}
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Remove default vertical scrollbar in IE 8/9.
+ */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+
+optgroup {
+  font-weight: bold;
+}
+
+/* Tables
+   ========================================================================== */
+
+/**
+ * Remove most spacing between table cells.
+ */
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+*, input[type="search"] {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}html button {
+	line-height: 1.2;
+	color: ;
+	background: ;
+	border-color: ;
+}/*
+** Basic element styles
+*/html {
+	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", "DejaVu Sans", sans-serif;
+	text-rendering: optimizeLegibility; /* Enables kerning and ligatures etc. */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}html:-webkit-full-screen {
+	background-color: #f4f4f4;
+}body.tc-body {
+	font-size: 14px;
+	line-height: 20px;
+	color: #333333;
+	background-color: #f4f4f4;
+	fill: #333333;
+	word-wrap: break-word;
+	
+
+
+}h1, h2, h3, h4, h5, h6 {
+	line-height: 1.2;
+	font-weight: 300;
+}pre {
+	display: block;
+	padding: 14px;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	word-break: normal;
+	word-wrap: break-word;
+	white-space: pre;
+	white-space: pre-wrap;
+	background-color: #f5f5f5;
+	border: 1px solid #cccccc;
+	padding: 0 3px 2px;
+	border-radius: 3px;
+	font-family: Monaco, Consolas, "Lucida Console", "DejaVu Sans Mono", monospace;
+}code {
+	color: #dd1144;
+	background-color: #f7f7f9;
+	border: 1px solid #e1e1e8;
+    white-space: pre-wrap;
+	padding: 0 3px 2px;
+	border-radius: 3px;
+	font-family: Monaco, Consolas, "Lucida Console", "DejaVu Sans Mono", monospace;
+}blockquote {
+	border-left: 5px solid #bbb;
+	margin-left: 25px;
+	padding-left: 10px;
+}dl dt {
+	font-weight: bold;
+	margin-top: 6px;
+}textarea,
+input[type=text],
+input[type=search],
+input[type=""],
+input:not([type]) {
+	color: #333333;
+	background: #ffffff;
+}.tc-muted {
+	color: #bbb;
+}svg.tc-image-button {
+	padding: 0px 1px 1px 0px;
+}kbd {
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 0.8em;
+	line-height: 1.2;
+	color: #333333;
+	vertical-align: middle;
+	background-color: #ffffff;
+	border: solid 1px #bbb;
+	border-bottom-color: #bbb;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #bbb;
+}/*
+Markdown likes putting code elements inside pre elements
+*/
+pre > code {
+	padding: 0;
+	border: none;
+	background-color: inherit;
+	color: inherit;
+}table {
+	border: 1px solid #dddddd;
+	width: auto;
+	max-width: 100%;
+	caption-side: bottom;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}table th, table td {
+	padding: 0 7px 0 7px;
+	border-top: 1px solid #dddddd;
+	border-left: 1px solid #dddddd;
+}table thead tr td, table th {
+	background-color: #f0f0f0;
+	font-weight: bold;
+}table tfoot tr td {
+	background-color: #a8a8a8;
+}.tc-csv-table {
+	white-space: nowrap;
+}.tc-tiddler-frame img,
+.tc-tiddler-frame svg,
+.tc-tiddler-frame canvas,
+.tc-tiddler-frame embed,
+.tc-tiddler-frame iframe {
+	max-width: 100%;
+}.tc-tiddler-body > embed,
+.tc-tiddler-body > iframe {
+	width: 100%;
+	height: 600px;
+}/*
+** Links
+*/button.tc-tiddlylink,
+a.tc-tiddlylink {
+	text-decoration: none;
+	font-weight: normal;
+	color: #5778d8;
+	-webkit-user-select: inherit; /* Otherwise the draggable attribute makes links impossible to select */
+}.tc-sidebar-lists a.tc-tiddlylink {
+	color: #999999;
+}.tc-sidebar-lists a.tc-tiddlylink:hover {
+	color: #444444;
+}button.tc-tiddlylink:hover,
+a.tc-tiddlylink:hover {
+	text-decoration: underline;
+}a.tc-tiddlylink-resolves {
+}a.tc-tiddlylink-shadow {
+	font-weight: bold;
+}a.tc-tiddlylink-shadow.tc-tiddlylink-resolves {
+	font-weight: normal;
+}a.tc-tiddlylink-missing {
+	font-style: italic;
+}a.tc-tiddlylink-external {
+	text-decoration: underline;
+	color: #0000ee;
+	background-color: inherit;
+}a.tc-tiddlylink-external:visited {
+	color: #0000aa;
+	background-color: inherit;
+}a.tc-tiddlylink-external:hover {
+	color: inherit;
+	background-color: inherit;
+}/*
+** Drag and drop styles
+*/.tc-tiddler-dragger {
+	position: relative;
+	z-index: -10000;
+}.tc-tiddler-dragger-inner {
+	position: absolute;
+	display: inline-block;
+	padding: 8px 20px;
+	font-size: 16.9px;
+	font-weight: bold;
+	line-height: 20px;
+	color: #ffffff;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
+	white-space: nowrap;
+	vertical-align: baseline;
+	background-color: #333333;
+	border-radius: 20px;
+}.tc-tiddler-dragger-cover {
+	position: absolute;
+	background-color: #f4f4f4;
+}.tc-dropzone {
+	position: relative;
+}.tc-dropzone.tc-dragover:before {
+	z-index: 10000;
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0,200,0,0.7);
+	text-align: center;
+	content: "Drop here (or use the 'Escape' key to cancel)";
+}/*
+** Plugin reload warning
+*/.tc-plugin-reload-warning {
+	z-index: 1000;
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: #ffe476;
+	text-align: center;
+}/*
+** Buttons
+*/button svg, button img {
+	vertical-align: middle;
+}.tc-btn-invisible {
+	padding: 0;
+	margin: 0;
+	background: none;
+	border: none;
+}.tc-btn-boxed {
+	font-size: 0.6em;
+	padding: 0.2em;
+	margin: 1px;
+	background: none;
+	border: 1px solid #cccccc;
+	border-radius: 0.25em;
+}html body.tc-body .tc-btn-boxed svg {
+	font-size: 1.6666em;
+}.tc-btn-boxed:hover {
+	background: #bbb;
+	color: #ffffff;
+}html body.tc-body .tc-btn-boxed:hover svg {
+	fill: #ffffff;
+}.tc-btn-rounded {
+	font-size: 0.5em;
+	line-height: 2;
+	padding: 0em 0.3em 0.2em 0.4em;
+	margin: 1px;
+	border: 1px solid #bbb;
+	background: #bbb;
+	color: #ffffff;
+	border-radius: 2em;
+}html body.tc-body .tc-btn-rounded svg {
+	font-size: 1.6666em;
+	fill: #ffffff;
+}.tc-btn-rounded:hover {
+	border: 1px solid #bbb;
+	background: #ffffff;
+	color: #bbb;
+}html body.tc-body .tc-btn-rounded:hover svg {
+	fill: #bbb;
+}.tc-btn-icon svg {
+	height: 1em;
+	width: 1em;
+	fill: #bbb;
+}.tc-btn-text {
+	padding: 0;
+	margin: 0;
+}.tc-btn-big-green {
+	display: inline-block;
+	padding: 8px;
+	margin: 4px 8px 4px 8px;
+	background: #34c734;
+	color: #ffffff;
+	fill: #ffffff;
+	border: none;
+	font-size: 1.2em;
+	line-height: 1.4em;
+	text-decoration: none;
+}.tc-btn-big-green svg,
+.tc-btn-big-green img {
+	height: 2em;
+	width: 2em;
+	vertical-align: middle;
+	fill: #ffffff;
+}.tc-sidebar-lists input {
+	color: #333333;
+}.tc-sidebar-lists button {
+	color: #333333;
+	fill: #333333;
+}.tc-sidebar-lists button.tc-btn-mini {
+	color: #c0c0c0;
+}.tc-sidebar-lists button.tc-btn-mini:hover {
+	color: #444444;
+}button svg.tc-image-button, button .tc-image-button img {
+	height: 1em;
+	width: 1em;
+}/*
+** Tags and missing tiddlers
+*/.tc-tag-list-item {
+	position: relative;
+	display: inline-block;
+	margin-right: 7px;
+}.tc-tags-wrapper {
+	margin: 4px 0 14px 0;
+}.tc-missing-tiddler-label {
+	font-style: italic;
+	font-weight: normal;
+	display: inline-block;
+	font-size: 11.844px;
+	line-height: 14px;
+	white-space: nowrap;
+	vertical-align: baseline;
+}button.tc-tag-label, span.tc-tag-label {
+	display: inline-block;
+	padding: 0.16em 0.7em;
+	font-size: 0.9em;
+	font-weight: 300;
+	line-height: 1.2em;
+	color: #ffffff;
+	white-space: nowrap;
+	vertical-align: baseline;
+	background-color: #ec6;
+	border-radius: 1em;
+}.tc-untagged-separator {
+	width: 10em;
+	left: 0;
+	margin-left: 0;
+	border: 0;
+	height: 1px;
+	background: #d8d8d8;
+}button.tc-untagged-label {
+	background-color: #999999;
+}.tc-tag-label svg, .tc-tag-label img {
+	height: 1em;
+	width: 1em;
+	fill: #ffffff;
+}.tc-tag-manager-table .tc-tag-label {
+	white-space: normal;
+}.tc-tag-manager-tag {
+	width: 100%;
+}/*
+** Page layout
+*/.tc-topbar {
+	position: fixed;
+	z-index: 1200;
+}.tc-topbar-left {
+	left: 29px;
+	top: 5px;
+}.tc-topbar-right {
+	top: 5px;
+	right: 29px;
+}.tc-topbar button {
+	padding: 8px;
+}.tc-topbar svg {
+	fill: #bbb;
+}.tc-topbar button:hover svg {
+	fill: #333333;
+}.tc-sidebar-header {
+	color: #acacac;
+	fill: #acacac;
+}.tc-sidebar-header .tc-title a.tc-tiddlylink-resolves {
+	font-weight: 300;
+}.tc-sidebar-header .tc-sidebar-lists p {
+	margin-top: 3px;
+	margin-bottom: 3px;
+}.tc-sidebar-header .tc-missing-tiddler-label {
+	color: #acacac;
+}.tc-advanced-search input {
+	width: 60%;
+}.tc-search a svg {
+	width: 1.2em;
+	height: 1.2em;
+	vertical-align: middle;
+}.tc-search-results {
+	padding-top: 14px;
+}.tc-page-controls {
+	margin-top: 14px;
+	font-size: 1.5em;
+}.tc-page-controls button {
+	margin-right: 0.5em;
+}.tc-page-controls a.tc-tiddlylink:hover {
+	text-decoration: none;
+}.tc-page-controls img {
+	width: 1em;
+}.tc-page-controls svg,
+.tc-search svg {
+	fill: #aaaaaa;
+}.tc-page-controls button:hover svg, .tc-page-controls a:hover svg,
+.tc-search button:hover svg, .tc-search a:hover svg {
+	fill: #000000;
+}.tc-menu-list-item {
+	white-space: nowrap;
+}.tc-menu-list-count {
+	font-weight: bold;
+}.tc-menu-list-subitem {
+	padding-left: 7px;
+}.tc-story-river {
+	position: relative;
+}@media (max-width: 1280px) {.tc-sidebar-header {
+		padding: 14px;
+		min-height: 32px;
+		margin-top: 0px;
+	}.tc-story-river {
+		position: relative;
+		padding: 0;
+	}
+}@media (min-width: 1280px) {.tc-message-box {
+		margin: 21px -21px 21px -21px;
+	}.tc-sidebar-scrollable {
+		position: fixed;
+		top: 0px;
+		left: 770px;
+		bottom: 0;
+		right: 0;
+		overflow-y: auto;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		margin: 0 0 0 -42px;
+		padding: 71px 0 28px 42px;
+	}.tc-story-river {
+		position: relative;
+		left: 0px;
+		top: 0px;
+		width: 770px;
+		padding: 42px 42px 42px 42px;
+	}}@media print {body.tc-body {
+		background-color: transparent;
+	}.tc-sidebar-header, .tc-topbar {
+		display: none;
+	}.tc-story-river {
+		margin: 0;
+		padding: 0;
+	}.tc-story-river .tc-tiddler-frame {
+		margin: 0;
+		border: none;
+		padding: 28px;
+	}
+}/*
+** Tiddler styles
+*/.tc-tiddler-frame {
+	margin-bottom: 28px;
+	background-color: #ffffff;
+	border: 1px solid #ffffff;
+}
+.tc-tiddler-info {
+	padding: 14px 42px 14px 42px;
+	background-color: #f8f8f8;
+	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
+}.tc-tiddler-info p {
+	margin-top: 3px;
+	margin-bottom: 3px;
+}.tc-tiddler-info .tc-tab-buttons button.tc-tab-selected {
+	background-color: #f8f8f8;
+	border-bottom: 1px solid #f8f8f8;
+}.tc-view-field-table {
+	width: 100%;
+}.tc-view-field-name {
+	width: 1%; /* Makes this column be as narrow as possible */
+	text-align: right;
+	font-style: italic;
+	font-weight: 200;
+}.tc-view-field-value {
+}@media (max-width: 1280px) {
+	.tc-tiddler-frame {
+		padding: 14px 14px 14px 14px;
+	}.tc-tiddler-info {
+		margin: 0 -14px 0 -14px;
+	}
+}@media (min-width: 1280px) {
+	.tc-tiddler-frame {
+		padding: 28px 42px 42px 42px;
+		width: 686px;
+		border-radius: 2px;
+	}.tc-tiddler-info {
+		margin: 0 -42px 0 -42px;
+	}
+}.tc-site-title,
+.tc-titlebar {
+	font-weight: 300;
+	font-size: 2.35em;
+	line-height: 1.2em;
+	color: #182955;
+	margin: 0;
+}.tc-site-title {
+	color: #182955;
+}.tc-tiddler-title-icon {
+	vertical-align: middle;
+}.tc-system-title-prefix {
+	color: #bbb;
+}.tc-titlebar h2 {
+	font-size: 1em;
+	display: inline;
+}.tc-titlebar img {
+	height: 1em;
+}.tc-subtitle {
+	font-size: 0.9em;
+	color: #c0c0c0;
+	font-weight: 300;
+}.tc-tiddler-missing .tc-title {
+  font-style: italic;
+  font-weight: normal;
+}.tc-tiddler-frame .tc-tiddler-controls {
+	float: right;
+}.tc-tiddler-controls .tc-drop-down {
+	font-size: 0.6em;
+}.tc-tiddler-controls .tc-drop-down .tc-drop-down {
+	font-size: 1em;
+}.tc-tiddler-controls > span > button {
+	vertical-align: baseline;
+	margin-left:5px;
+}.tc-tiddler-controls button svg, .tc-tiddler-controls button img {
+	height: 0.75em;
+	fill: #cccccc;
+}.tc-tiddler-controls button.tc-selected svg,
+.tc-page-controls button.tc-selected svg  {
+	fill: #444444;
+}.tc-tiddler-controls button.tc-btn-invisible:hover svg {
+	fill: #888888;
+}@media print {
+	.tc-tiddler-controls {
+		display: none;
+	}
+}.tc-tiddler-help { /* Help prompts within tiddler template */
+	color: #bbb;
+	margin-top: 14px;
+}.tc-tiddler-help a.tc-tiddlylink {
+	color: #888888;
+}.tc-tiddler-frame input.tc-edit-texteditor, .tc-tiddler-frame textarea.tc-edit-texteditor {
+	width: 100%;
+	padding: 3px 3px 3px 3px;
+	border: 1px solid #cccccc;
+	line-height: 1.3em;
+	-webkit-appearance: none;
+	margin: 4px 0 4px 0;
+}.tc-tiddler-frame .tc-binary-warning {
+	width: 100%;
+	height: 5em;
+	text-align: center;
+	padding: 3em 3em 6em 3em;
+	background: #ffe476;
+	border: 1px solid #b99e2f;
+}.tc-tiddler-frame input.tc-edit-texteditor {
+	background-color: #f8f8f8;
+}canvas.tc-edit-bitmapeditor  {
+	border: 6px solid #ffffff;
+	cursor: crosshair;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	margin-top: 6px;
+	margin-bottom: 6px;
+}.tc-edit-bitmapeditor-width {
+	display: block;
+}.tc-edit-bitmapeditor-height {
+	display: block;
+}.tc-tiddler-frame .tc-tiddler-body {
+	font-size: 15px;
+	line-height: 22px;
+}.tc-titlebar, .tc-tiddler-edit-title {
+	overflow: hidden; /* https://github.com/Jermolene/TiddlyWiki5/issues/282 */
+}html body.tc-body.tc-single-tiddler-window {
+	margin: 1em;
+	background: #ffffff;
+}.tc-single-tiddler-window img,
+.tc-single-tiddler-window svg,
+.tc-single-tiddler-window canvas,
+.tc-single-tiddler-window embed,
+.tc-single-tiddler-window iframe {
+	max-width: 100%;
+}/*
+** Adjustments for fluid-fixed mode
+*/@media (min-width: 1280px) {.tc-story-river {
+		padding-right: 0;
+		position: relative;
+		width: auto;
+		left: 0;
+		margin-right: 350px;
+	}.tc-tiddler-frame {
+		width: 100%;
+	}.tc-sidebar-scrollable {
+		left: auto;
+		bottom: 0;
+		right: 0;
+		width: 350px;
+	}body.tc-body .tc-storyview-zoomin-tiddler {
+		width: 100%;
+		width: calc(100% - 42px);
+	}}/*
+** Toolbar buttons
+*/.tc-page-controls svg.tc-image-new-button {
+  fill: ;
+}.tc-page-controls svg.tc-image-options-button {
+  fill: ;
+}.tc-page-controls svg.tc-image-save-button {
+  fill: ;
+}.tc-tiddler-controls button svg.tc-image-info-button {
+  fill: ;
+}.tc-tiddler-controls button svg.tc-image-edit-button {
+  fill: ;
+}.tc-tiddler-controls button svg.tc-image-close-button {
+  fill: ;
+}.tc-tiddler-controls button svg.tc-image-delete-button {
+  fill: ;
+}.tc-tiddler-controls button svg.tc-image-cancel-button {
+  fill: ;
+}.tc-tiddler-controls button svg.tc-image-done-button {
+  fill: ;
+}/*
+** Tiddler edit mode
+*/.tc-tiddler-edit-frame em.tc-edit {
+	color: #bbb;
+	font-style: normal;
+}.tc-edit-type-dropdown a.tc-tiddlylink-missing {
+	font-style: normal;
+}.tc-edit-tags {
+	border: 1px solid #cccccc;
+	padding: 4px 8px 4px 8px;
+}.tc-edit-add-tag {
+	display: inline-block;
+}.tc-edit-add-tag .tc-add-tag-name input {
+	width: 50%;
+}.tc-edit-tags .tc-tag-label {
+	display: inline-block;
+}.tc-edit-tags-list {
+	margin: 14px 0 14px 0;
+}.tc-remove-tag-button {
+	padding-left: 4px;
+}.tc-tiddler-preview {
+	overflow: auto;
+}.tc-tiddler-preview-preview {
+	float: right;
+	width: 48%;
+	border: 1px solid #cccccc;
+	margin: 4px 3px 3px 3px;
+	padding: 3px 3px 3px 3px;
+}.tc-tiddler-preview-edit {
+	width: 48%;
+}.tc-edit-fields {
+	width: 100%;
+}.tc-edit-fields table, .tc-edit-fields tr, .tc-edit-fields td {
+	border: none;
+	padding: 4px;
+}.tc-edit-fields > tbody > .tc-edit-field:nth-child(odd) {
+	background-color: #f0f4f0;
+}.tc-edit-fields > tbody > .tc-edit-field:nth-child(even) {
+	background-color: #e0e8e0;
+}.tc-edit-field-name {
+	text-align: right;
+}.tc-edit-field-value input {
+	width: 100%;
+}.tc-edit-field-remove {
+}.tc-edit-field-remove svg {
+	height: 1em;
+	width: 1em;
+	fill: #bbb;
+	vertical-align: middle;
+}.tc-edit-field-add-name {
+	display: inline-block;
+	width: 15%;
+}.tc-edit-field-add-value {
+	display: inline-block;
+	width: 40%;
+}.tc-edit-field-add-button {
+	display: inline-block;
+	width: 10%;
+}/*
+** Storyview Classes
+*/.tc-storyview-zoomin-tiddler {
+	position: absolute;
+	display: block;
+	width: 100%;
+}@media (min-width: 1280px) {.tc-storyview-zoomin-tiddler {
+		width: calc(100% - 84px);
+	}}/*
+** Dropdowns
+*/.tc-btn-dropdown {
+	text-align: left;
+}.tc-btn-dropdown svg, .tc-btn-dropdown img {
+	height: 1em;
+	width: 1em;
+	fill: #bbb;
+}.tc-drop-down-wrapper {
+	position: relative;
+}.tc-drop-down {
+	min-width: 380px;
+	border: 1px solid #bbb;
+	background-color: #ffffff;
+	padding: 7px 0 7px 0;
+	margin: 4px 0 0 0;
+	white-space: nowrap;
+	text-shadow: none;
+	line-height: 1.4;
+}.tc-drop-down .tc-drop-down {
+	margin-left: 14px;
+}.tc-drop-down button svg, .tc-drop-down a svg  {
+	fill: #333333;
+}.tc-drop-down button.tc-btn-invisible:hover svg {
+	fill: #333333;
+}.tc-drop-down p {
+	padding: 0 14px 0 14px;
+}.tc-drop-down svg {
+	width: 1em;
+	height: 1em;
+}.tc-drop-down img {
+	width: 1em;
+}.tc-drop-down-language-chooser img {
+	width: 2em;
+	vertical-align: baseline;
+}.tc-drop-down a, .tc-drop-down button {
+	display: block;
+	padding: 0 14px 0 14px;
+	width: 100%;
+	text-align: left;
+	color: #333333;
+	line-height: 1.4;
+}.tc-drop-down .tc-prompt {
+	padding: 0 14px;	
+}.tc-drop-down .tc-chooser {
+	border: none;
+}.tc-drop-down .tc-chooser .tc-swatches-horiz {
+	font-size: 0.4em;
+	padding-left: 1.2em;
+}.tc-drop-down .tc-file-input-wrapper {
+	width: 100%;
+}.tc-drop-down .tc-file-input-wrapper button {
+	color: #333333;
+}.tc-drop-down a:hover, .tc-drop-down button:hover, .tc-drop-down .tc-file-input-wrapper:hover button {
+	color: #ffffff;
+	background-color: #5778d8;
+	text-decoration: none;
+}.tc-drop-down .tc-tab-buttons button {
+	background-color: #ececec;
+}.tc-drop-down .tc-tab-buttons button.tc-tab-selected {
+	background-color: #fff;
+	border-bottom: 1px solid #fff;
+}.tc-drop-down-bullet {
+	display: inline-block;
+	width: 0.5em;
+}.tc-drop-down .tc-tab-contents a {
+	padding: 0 0.5em 0 0.5em;
+}.tc-block-dropdown-wrapper {
+	position: relative;
+}.tc-block-dropdown {
+	position: absolute;
+	min-width: 220px;
+	border: 1px solid #bbb;
+	background-color: #ffffff;
+	padding: 7px 0;
+	margin: 4px 0 0 0;
+	white-space: nowrap;
+	z-index: 1000;
+}.tc-block-dropdown a {
+	display: block;
+	padding: 4px 14px 4px 14px;
+}.tc-drop-down .tc-dropdown-item,
+.tc-block-dropdown .tc-dropdown-item {
+	padding: 4px 14px 4px 7px;
+	color: #bbb;
+}.tc-block-dropdown a:hover {
+	color: #ffffff;
+	background-color: #5778d8;
+	text-decoration: none;
+}/*
+** Modals
+*/.tc-modal-wrapper {
+	position: fixed;
+	overflow: auto;
+	overflow-y: scroll;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}.tc-modal-backdrop {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1000;
+	background-color: #333333;
+}.tc-modal {
+	z-index: 1100;
+	background-color: #ffffff;
+	border: 1px solid #999999;
+}@media (max-width: 55em) {
+	.tc-modal {
+		position: fixed;
+		top: 1em;
+		left: 1em;
+		right: 1em;
+	}.tc-modal-body {
+		overflow-y: auto;
+		max-height: 400px;
+		max-height: 60vh;
+	}
+}@media (min-width: 55em) {
+	.tc-modal {
+		position: fixed;
+		top: 2em;
+		left: 25%;
+		width: 50%;
+	}.tc-modal-body {
+		overflow-y: auto;
+		max-height: 400px;
+		max-height: 60vh;
+	}
+}.tc-modal-header {
+	padding: 9px 15px;
+	border-bottom: 1px solid #eeeeee;
+}.tc-modal-header h3 {
+	margin: 0;
+	line-height: 30px;
+}.tc-modal-header img, .tc-modal-header svg {
+	width: 1em;
+	height: 1em;
+}.tc-modal-body {
+	padding: 15px;
+}.tc-modal-footer {
+	padding: 14px 15px 15px;
+	margin-bottom: 0;
+	text-align: right;
+	background-color: #f5f5f5;
+	border-top: 1px solid #dddddd;
+}/*
+** Notifications
+*/.tc-notification {
+	position: fixed;
+	top: 14px;
+	right: 42px;
+	z-index: 1300;
+	max-width: 280px;
+	padding: 0 14px 0 14px;
+	background-color: #ffffdd;
+	border: 1px solid #999999;
+}/*
+** Tabs
+*/.tc-tab-set.tc-vertical {
+	display: -webkit-flex;
+	display: flex;
+}.tc-tab-buttons {
+	font-size: 0.85em;
+	padding-top: 1em;
+	margin-bottom: -2px;
+}.tc-tab-buttons.tc-vertical  {
+	z-index: 100;
+	display: block;
+	padding-top: 14px;
+	vertical-align: top;
+	text-align: right;
+	margin-bottom: inherit;
+	margin-right: -1px;
+	max-width: 33%;
+	-webkit-flex: 0 0 auto;
+	flex: 0 0 auto;
+}.tc-tab-buttons button.tc-tab-selected {
+	color: #666666;
+	background-color: #ffffff;
+	border-left: 1px solid #d8d8d8;
+	border-top: 1px solid #d8d8d8;
+	border-right: 1px solid #d8d8d8;
+}.tc-tab-buttons button {
+	color: #666666;
+	padding: 3px 5px 3px 5px;
+	font-weight: 300;
+	border: none;
+	background: inherit;
+	background-color: #d8d8d8;
+	border-left: 1px solid #cccccc;
+	border-top: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+}.tc-tab-buttons.tc-vertical button {
+	display: block;
+	width: 100%;
+	margin-top: 3px;
+	text-align: right;
+	background-color: #d8d8d8;
+	border-left: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+	border-right: none;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}.tc-tab-buttons.tc-vertical button.tc-tab-selected {
+	background-color: #ffffff;
+	border-right: 1px solid #ffffff;
+}.tc-tab-divider {
+	border-top: 1px solid #d8d8d8;
+}.tc-tab-divider.tc-vertical  {
+	display: none;
+}.tc-tab-content {
+	margin-top: 14px;
+}.tc-tab-content.tc-vertical  {
+	display: inline-block;
+	vertical-align: top;
+	padding-top: 0;
+	padding-left: 14px;
+	border-left: 1px solid #cccccc;
+	-webkit-flex: 1 0 70%;
+	flex: 1 0 70%;
+}.tc-sidebar-lists .tc-tab-buttons {
+	margin-bottom: -1px;
+}.tc-sidebar-lists .tc-tab-buttons button.tc-tab-selected {
+	background-color: #f4f4f4;
+	color: ;
+	border-left: 1px solid #d8d8d8;
+	border-top: 1px solid #d8d8d8;
+	border-right: 1px solid #d8d8d8;
+}.tc-sidebar-lists .tc-tab-buttons button {
+	background-color: #e0e0e0;
+	color: #666666;
+	border-left: 1px solid #cccccc;
+	border-top: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+}.tc-sidebar-lists .tc-tab-divider {
+	border-top: 1px solid #e4e4e4;
+}.tc-more-sidebar .tc-tab-buttons button {
+	background-color: #e0e0e0;
+	border-top: none;
+	border-left: none;
+	border-bottom: none;
+	border-right: 1px solid #ccc;
+	margin-bottom: inherit;
+}.tc-more-sidebar .tc-tab-buttons button.tc-tab-selected {
+	background-color: #f4f4f4;
+	border: none;
+}/*
+** Alerts
+*/.tc-alerts {
+	position: fixed;
+	top: 0;
+	left: 0;
+	max-width: 500px;
+	z-index: 20000;
+}.tc-alert {
+	position: relative;
+	margin: 28px;
+	padding: 14px 14px 14px 14px;
+	border: 2px solid #b99e2f;
+	background-color: #ffe476;
+}.tc-alert-toolbar {
+	position: absolute;
+	top: 14px;
+	right: 14px;
+}.tc-alert-toolbar svg {
+	fill: #b99e2f;
+}.tc-alert-subtitle {
+	color: #b99e2f;
+	font-weight: bold;
+}.tc-alert-highlight {
+	color: #881122;
+}@media (min-width: 1280px) {.tc-static-alert {
+		position: relative;
+	}.tc-static-alert-inner {
+		position: absolute;
+		z-index: 100;
+	}}.tc-static-alert-inner {
+	padding: 0 2px 2px 42px;
+	color: #aaaaaa;
+}/*
+** Control panel
+*/.tc-control-panel td {
+	padding: 4px;
+}.tc-control-panel table, .tc-control-panel table input, .tc-control-panel table textarea {
+	width: 100%;
+}.tc-plugin-info {
+	display: block;
+	border: 1px solid #bbb;
+	background-colour: #ffffff;
+	margin: 0.5em 0 0.5em 0;
+	padding: 4px;
+}.tc-plugin-info-disabled {
+	background: -webkit-repeating-linear-gradient(45deg, #ff0, #ff0 10px, #eee 10px, #eee 20px);
+	background: repeating-linear-gradient(45deg, #ff0, #ff0 10px, #eee 10px, #eee 20px);
+}.tc-plugin-info-disabled:hover {
+	background: -webkit-repeating-linear-gradient(45deg, #aa0, #aa0 10px, #888 10px, #888 20px);
+	background: repeating-linear-gradient(45deg, #aa0, #aa0 10px, #888 10px, #888 20px);
+}a.tc-tiddlylink.tc-plugin-info:hover {
+	text-decoration: none;
+	background-color: #5778d8;
+	color: #ffffff;
+	fill: #333333;
+}a.tc-tiddlylink.tc-plugin-info:hover svg {
+	fill: #333333;
+}.tc-plugin-info-chunk {
+	display: inline-block;
+	vertical-align: middle;
+}.tc-plugin-info-chunk h1 {
+	font-size: 1em;
+	margin: 2px 0 2px 0;
+}.tc-plugin-info-chunk h2 {
+	font-size: 0.8em;
+	margin: 2px 0 2px 0;
+}.tc-plugin-info-chunk div {
+	font-size: 0.7em;
+	margin: 2px 0 2px 0;
+}.tc-plugin-info img, .tc-plugin-info svg {
+	width: 2em;
+	height: 2em;
+	fill: #bbb;
+}.tc-plugin-info.tc-small-icon img, .tc-plugin-info.tc-small-icon svg {
+	width: 1em;
+	height: 1em;
+}.tc-plugin-info-dropdown {
+	border: 1px solid #bbb;
+	margin-top: -8px;
+}.tc-plugin-info-dropdown-message {
+	background: #ecf2ff;
+	padding: 0.5em 1em 0.5em 1em;
+	font-weight: bold;
+	font-size: 0.8em;
+}.tc-plugin-info-dropdown-body {
+	padding: 1em 1em 1em 1em;
+}/*
+** Message boxes
+*/.tc-message-box {
+	border: 1px solid #cfd6e6;
+	background: #ecf2ff;
+	padding: 0px 21px 0px 21px;
+	font-size: 12px;
+	line-height: 18px;
+	color: #547599;
+}/*
+** Pictures
+*/.tc-bordered-image {
+	border: 1px solid #bbb;
+	padding: 5px;
+	margin: 5px;
+}/*
+** Floats
+*/.tc-float-right {
+	float: right;
+}/*
+** Chooser
+*/.tc-chooser {
+	border: 1px solid #dddddd;
+}.tc-chooser-item {
+	border: 8px;
+	padding: 2px 4px;
+}.tc-chooser-item a.tc-tiddlylink {
+	display: block;
+	text-decoration: none;
+	color: #5778d8;
+	background-color: #ffffff;
+}.tc-chooser-item a.tc-tiddlylink:hover {
+	text-decoration: none;
+	color: #ffffff;
+	background-color: #5778d8;
+}/*
+** Palette swatches
+*/.tc-swatches-horiz {
+}.tc-swatches-horiz .tc-swatch {
+	display: inline-block;
+}.tc-swatch {
+	width: 2em;
+	height: 2em;
+	margin: 0.4em;
+	border: 1px solid #888;
+}/*
+** Table of contents
+*/.tc-sidebar-lists .tc-table-of-contents {
+	white-space: nowrap;
+}.tc-table-of-contents button {
+	color: #acacac;
+}.tc-table-of-contents svg {
+	width: 0.7em;
+	height: 0.7em;
+	vertical-align: middle;
+	fill: #acacac;
+}.tc-table-of-contents ol {
+	list-style-type: none;
+	padding-left: 0;
+}.tc-table-of-contents ol ol {
+	padding-left: 1em;
+}.tc-table-of-contents li {
+	font-size: 1.0em;
+	font-weight: bold;
+}.tc-table-of-contents li a {
+	font-weight: bold;
+}.tc-table-of-contents li li {
+	font-size: 0.95em;
+	font-weight: normal;
+	line-height: 1.4;
+}.tc-table-of-contents li li a {
+	font-weight: normal;
+}.tc-table-of-contents li li li {
+	font-size: 0.95em;
+	font-weight: 200;
+	line-height: 1.5;
+}.tc-table-of-contents li li li a {
+	font-weight: bold;
+}.tc-table-of-contents li li li li {
+	font-size: 0.95em;
+	font-weight: 200;
+}.tc-tabbed-table-of-contents {
+	display: -webkit-flex;
+	display: flex;
+}.tc-tabbed-table-of-contents .tc-table-of-contents {
+	z-index: 100;
+	display: inline-block;
+	padding-left: 1em;
+	max-width: 50%;
+	-webkit-flex: 0 0 auto;
+	flex: 0 0 auto;
+	background: #d8d8d8;
+	border-left: 1px solid #cccccc;
+	border-top: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+}.tc-tabbed-table-of-contents .tc-table-of-contents .toc-item > a,
+.tc-tabbed-table-of-contents .tc-table-of-contents .toc-item-selected > a {
+	display: block;
+	padding: 0.12em 1em 0.12em 0.25em;
+}.tc-tabbed-table-of-contents .tc-table-of-contents .toc-item > a {
+	border-top: 1px solid #d8d8d8;
+	border-left: 1px solid #d8d8d8;
+	border-bottom: 1px solid #d8d8d8;
+}.tc-tabbed-table-of-contents .tc-table-of-contents .toc-item > a:hover {
+	text-decoration: none;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+	background: #cccccc;
+}.tc-tabbed-table-of-contents .tc-table-of-contents .toc-item-selected > a {
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-bottom: 1px solid #cccccc;
+	background: #ffffff;
+	margin-right: -1px;
+}.tc-tabbed-table-of-contents .tc-table-of-contents .toc-item-selected > a:hover {
+	text-decoration: none;
+}.tc-tabbed-table-of-contents .tc-tabbed-table-of-contents-content {
+	display: inline-block;
+	vertical-align: top;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
+	border: 1px solid #cccccc;
+	-webkit-flex: 1 0 50%;
+	flex: 1 0 50%;
+}/*
+** Dirty indicator
+*/body.tc-dirty span.tc-dirty-indicator, body.tc-dirty span.tc-dirty-indicator svg {
+	fill: #ff0000;
+	color: #ff0000;
+}/*
+** File inputs
+*/.tc-file-input-wrapper {
+	position: relative;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: middle;
+}.tc-file-input-wrapper input[type=file] {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	font-size: 999px;
+	max-width: 100%;
+	max-height: 100%;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: pointer;
+	display: inline-block;
+}/*
+** Thumbnail macros
+*/.tc-thumbnail-wrapper {
+	position: relative;
+	display: inline-block;
+	margin: 6px;
+	vertical-align: top;
+}.tc-thumbnail-right-wrapper {
+	float:right;
+	margin: 0.5em 0 0.5em 0.5em;
+}.tc-thumbnail-image {
+    text-align: center;
+	overflow: hidden;
+	border-radius: 3px;
+}.tc-thumbnail-image svg,
+.tc-thumbnail-image img {
+	filter: alpha(opacity=1);
+	opacity: 1;
+    min-width: 100%;
+    min-height: 100%;
+    max-width: 100%;
+}.tc-thumbnail-wrapper:hover .tc-thumbnail-image svg,
+.tc-thumbnail-wrapper:hover .tc-thumbnail-image img {
+	filter: alpha(opacity=0.8);
+	opacity: 0.8;
+}.tc-thumbnail-background {
+	position: absolute;
+	border-radius: 3px;
+}.tc-thumbnail-icon svg,
+.tc-thumbnail-icon img {
+	width: 3em;
+	height: 3em;
+	
+  -webkit-filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+     -moz-filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+          filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+
+}.tc-thumbnail-wrapper:hover .tc-thumbnail-icon svg,
+.tc-thumbnail-wrapper:hover .tc-thumbnail-icon img {
+	fill: #fff;
+	
+  -webkit-filter: drop-shadow(3px 3px 4px rgba(0,0,0,0.6));
+     -moz-filter: drop-shadow(3px 3px 4px rgba(0,0,0,0.6));
+          filter: drop-shadow(3px 3px 4px rgba(0,0,0,0.6));
+
+}.tc-thumbnail-icon {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: -webkit-flex;
+	-webkit-align-items: center;
+	-webkit-justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}.tc-thumbnail-caption {
+	position: absolute;
+	background-color: #777;
+	color: #fff;
+	text-align: center;
+	bottom: 0;
+	width: 100%;
+	filter: alpha(opacity=0.9);
+	opacity: 0.9;
+	line-height: 1.4;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}.tc-thumbnail-wrapper:hover .tc-thumbnail-caption {
+	filter: alpha(opacity=1);
+	opacity: 1;
+}/*
+** Errors
+*/.tc-error {
+	background: #f00;
+	color: #fff;
+}
+
+
+
+</style>
+</head>
+<body class="tc-body">
+
+<section class="tc-story-river">
+<p>
+<a name="chapter 0.1 introduction - pre-preparations">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists   tc-tagged-introduction"><div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<span class="tc-tiddler-controls">
+<span class=" tc-reveal"><button aria-label="more" class="tc-btn-invisible" title="More actions">
+
+
+</button><div class=" tc-reveal" hidden="true"></div></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="edit" class="tc-btn-invisible" title="Edit this tiddler">
+
+
+</button></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="close" class="tc-btn-invisible" title="Close this tiddler">
+
+
+</button></span>
+</span>
+
+<span>
+
+<span class="tc-tiddler-title-icon" style="fill:;">
+
+</span>
+
+
+
+<h2 class="tc-title">
+chapter 0.1 introduction - pre-preparations
+</h2>
+
+</span>
+
+</div>
+
+<div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div>
+</div><div class="tc-subtitle">
+<a class="tc-tiddlylink tc-tiddlylink-missing" href="#">
+
+</a> 10 hours ago
+</div>
+<div class="tc-tags-wrapper"><span class="tc-tag-list-item">
+
+
+<button class="tc-btn-invisible tc-tag-label" style="background-color:;
+fill:#333333;
+color:#333333;">
+ introduction
+</button>
+<span class=" tc-reveal" hidden="true"></span>
+
+
+</span>
+</div>
+
+<div class="tc-tiddler-body"><p>hello friends and welcome to the tutorial &quot;let's build a chatbot with freeBASIC&quot;... in this tutorial i will try and hope to teach you how to build different kinds of chat bots in freebasic...
+code examples and source files and recourses will be included in the final release of this ebook tutorial :)</p><p>for this tutorial i am using tiddlywiki program to write the ebook and as for freebasic this turorial assumes you are familiar with the most basics of freebasic programming (that is that you downloaded the freebasic compiler and you are using and FB  IDE such as FbEdit or PosiedonFB or WinFBE and you already made the proper action for using them - including downloading the freeBASIC help documentations) i'm using for this turorial freeBASIC compiler version 1.07.1 32bit and using FbEdit IDE. this tutorial assumes you already know the basics of using the IDE to compile and run the code in the code examples that will be giving.</p><p>in the next chapter we will talk about what exactly is a chatbot and talk about different kinds of chatbots... in the chapters that will follow we will also talk about the logic behind chatbots and what components they are made of...</p><p><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%200.2%20-%20what%20is%20a%20chatbot">next chapter 0.2 - what is a chatbot</a></p></div>
+
+
+
+</div>
+
+
+</a><a name="chapter 0.2 - what is a chatbot">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists   tc-tagged-introduction"><div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<span class="tc-tiddler-controls">
+<span class=" tc-reveal"><button aria-label="more" class="tc-btn-invisible" title="More actions">
+
+
+</button><div class=" tc-reveal" hidden="true"></div></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="edit" class="tc-btn-invisible" title="Edit this tiddler">
+
+
+</button></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="close" class="tc-btn-invisible" title="Close this tiddler">
+
+
+</button></span>
+</span>
+
+<span>
+
+<span class="tc-tiddler-title-icon" style="fill:;">
+
+</span>
+
+
+
+<h2 class="tc-title">
+chapter 0.2 - what is a chatbot
+</h2>
+
+</span>
+
+</div>
+
+<div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div>
+</div><div class="tc-subtitle">
+<a class="tc-tiddlylink tc-tiddlylink-missing" href="#">
+
+</a> 2 hours ago
+</div>
+<div class="tc-tags-wrapper"><span class="tc-tag-list-item">
+
+
+<button class="tc-btn-invisible tc-tag-label" style="background-color:;
+fill:#333333;
+color:#333333;">
+ introduction
+</button>
+<span class=" tc-reveal" hidden="true"></span>
+
+
+</span>
+</div>
+
+<div class="tc-tiddler-body"><p>hello to chapter 2 dear friends... here we'll talk about &quot;what is a chatbot?&quot;</p><p>well chat bots are programs that are supposed to make a conversional interaction with the user this is done for many reasons it could be for fun or entertainment or for a specific purpose like in the case of a commercial bots assistants or personal assistants like Appel's Siri or Amazon's Alexa or Microsoft's Cortana or Google's assistant...</p><p>since we are not a commercial corporation we will learn how to build our own personal chatbots for the sake of learning...</p><p>i want to add a personal view to this tutorial - it is no secret that i am Obsessive about chatbots ever since i started to learn to program and code. a chatbot especially one that you program and make on your own is like making or creating &quot;an entity&quot; a piece of software that you can program so you can have someone to talk to when you're lonely - like a friend that Will never abandon you and who will always be there if you'll need to talk to it. i guess it all depends on what kind of chatbot you want to code and for what purpose you code it. when i code a chatbot my purpose is to make it &quot;the best friend ever&quot; chatbot i guess others may code chatbots for other purposes (either for business or pleasure) and you can watch the excellent movie &quot;HER&quot; by spike johnnez from 2013 to get ideas (the movie portraits a romantic relationship between a human and an AI program).</p><p>i know that it may seems weird for some the concept of talking to a computer or a program after all why not just talk to a good HUMAN friend? well sometimes there aren't any or maybe your good HUMAN friend don't say to you what you need to hear or you fight with them from time to time or maybe your HUMAN friend isn't such a good FRIEND after all? etc.. etc... A CHATBOT that you programed by yourself can and probably will say and talk to you what you programmed it to say and talk and by so it can tell you sometimes what you need or want to hear...   (like &quot;don't cry i love you&quot; or &quot;i think your are amazing and i believe in you always&quot;)</p><p>one example of a positive supportive chatbot (commercialized) is &quot;Replika&quot; that is supposed to be the users best friend - this may make you laugh or seem ridiculous yet for lonely desperate people with no friends (like Teens who are bullied at school or older people that society has outcast or have social phobia) this so called silly programs or chatbots are sometimes their only comfort or social contact...</p><p>to me coding chatbots beside the challenge of making them is the need to talk with something that i created and NOT be alone.</p><p>this has been a very short introduction as to &quot;what is a chatbot&quot; or &quot;why code a chatbot?&quot; i could go on discussing this topic on and on yet i think my point has been made. if you wish to continue with me in this journey my friends then you're more then welcome...</p><p>in the next chapter we will discuss further the different types of chatbots and their abilities</p><p><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%200.3%20-%20the%20different%20chatbots%20types">chapter 0.3 - the different chatbots types</a>     </p></div>
+
+
+
+</div>
+
+
+</a><a name="chapter 0.3 - the different chatbots types">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists   tc-tagged-introduction"><div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<span class="tc-tiddler-controls">
+<span class=" tc-reveal"><button aria-label="more" class="tc-btn-invisible" title="More actions">
+
+
+</button><div class=" tc-reveal" hidden="true"></div></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="edit" class="tc-btn-invisible" title="Edit this tiddler">
+
+
+</button></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="close" class="tc-btn-invisible" title="Close this tiddler">
+
+
+</button></span>
+</span>
+
+<span>
+
+<span class="tc-tiddler-title-icon" style="fill:;">
+
+</span>
+
+
+
+<h2 class="tc-title">
+chapter 0.3 - the different chatbots types
+</h2>
+
+</span>
+
+</div>
+
+<div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div>
+</div><div class="tc-subtitle">
+<a class="tc-tiddlylink tc-tiddlylink-missing" href="#">
+
+</a> 36 hours ago
+</div>
+<div class="tc-tags-wrapper"><span class="tc-tag-list-item">
+
+
+<button class="tc-btn-invisible tc-tag-label" style="background-color:;
+fill:#333333;
+color:#333333;">
+ introduction
+</button>
+<span class=" tc-reveal" hidden="true"></span>
+
+
+</span>
+</div>
+
+<div class="tc-tiddler-body"><p>hello friends to chapter 0.3 - the different types of chatbots</p><p>this tutorial will focus on freebasic console chatbots programs that will be interacting with the user via text however near the end i plan to show you how you can add a text to speech abilities to your chatbots so your chatbots will be able to talk and answer with voice to you along side to text.</p><p>there are many and different types of chatbots out there from the most basic simple ones to the most advanced and complex ones.</p><p>i would like to focus on several of them:</p><p>1. hard coded chatbots - chatbots that are completely fixed and hard coded from the top to bottom meaning that their keywords and replies are coded into the main code file and there for cannot be changed</p><p>2. databased chatbots - chatbots that their keywords and replies are stored on a database file (we will use in this tutorial a simple text file as such a database) these chatbots are more flexible to maintain or to change their keywords and replies since all we have to do is to change the database by editing them instead of changing the main source code of the chatbot program</p><p>3. learning chatbots - these chatbots have the ability to learn new keywords and replies and they do so by having usually databases (again a text file or actually two text files one for keywords and another one for replies) and when they are giving new input they don't know or remember they ask the user to teach them what replay should they replay to this new input and then store and add the new keywords (the new input) and the proper replay (new output) into their databases then next time they are given the same learned input they replay the learned replay (teaching such a bot can be at first a very boring or frustrating thing since at first they need to ask you alot what to replay it's like teaching a baby chatbot to talk from scratch)</p><p>4.(chatbots that will not be discussed in this tutorial) AI chatbots - these chatbot's are the most complex and advanced chatbot programs there is. they use machine learning and neural networks algorithms and usually have big data databases of conversations. they usually coded in c/c++ or python or java so they will not be discussed here.</p><p>that is the basic types of chatbots that i mention here of course there are other categories to chatbot's types like online bots like chatroom bots we see in chatrooms on discord or irc or mobile chatbots for android or iOS mobile phone apps and list go on and on...</p><p>in the next chapter we will talk about the logic of how chatbot's work and also what are they're made of (what components)</p><p><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%200.4%20-%20chatbots%20logic">chapter 0.4 - chatbots logics</a></p></div>
+
+
+
+</div>
+
+
+</a><a name="chapter 0.4 - chatbots logic">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists   tc-tagged-introduction"><div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<span class="tc-tiddler-controls">
+<span class=" tc-reveal"><button aria-label="more" class="tc-btn-invisible" title="More actions">
+
+
+</button><div class=" tc-reveal" hidden="true"></div></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="edit" class="tc-btn-invisible" title="Edit this tiddler">
+
+
+</button></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="close" class="tc-btn-invisible" title="Close this tiddler">
+
+
+</button></span>
+</span>
+
+<span>
+
+<span class="tc-tiddler-title-icon" style="fill:;">
+
+</span>
+
+
+
+<h2 class="tc-title">
+chapter 0.4 - chatbots logic
+</h2>
+
+</span>
+
+</div>
+
+<div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div>
+</div><div class="tc-subtitle">
+<a class="tc-tiddlylink tc-tiddlylink-missing" href="#">
+
+</a> 35 hours ago
+</div>
+<div class="tc-tags-wrapper"><span class="tc-tag-list-item">
+
+
+<button class="tc-btn-invisible tc-tag-label" style="background-color:;
+fill:#333333;
+color:#333333;">
+ introduction
+</button>
+<span class=" tc-reveal" hidden="true"></span>
+
+
+</span>
+</div>
+
+<div class="tc-tiddler-body"><p>hello friends here we will talk about the logic behind chatbots and what are they made of...</p><p>the most basic logic of the most basic chatbots is as the following:</p><p>well first of all the chatbot programs waits for input from the user. then it searches in that input for specific pre-defined KEYWORDS and if it finds any it will choose randomly from a specific pre-defined REPLIES a proper replay and will answer (meaning print) that replay to the user then it will wait for more input from the user and so on until the user gives a command to exit the program and then the programs end.</p><p>in addition to the KEYWORDS-REPLIES search there is also another set of DEFULT REPLIES that the chatbot program prints and answer to the user this happens when there are no keywords found in the input and they are generated randomly from a specific pre-defined DEFUALT REPLIES just in order for the chatbot to say something in any given time even if it didn't find any keywords in the user's input...</p><p>so far for the basic logic of how a chatbot program works but what are they made of?</p><p>well here are some of the objects or components chatbots are made of:</p><p>1. variables - especially string variables to store input from user and other matters</p><p>2. arrays - again arrays of strings they can be static arrays or dynamic arrays and they store the keywords and replies you want the chatbot to be able to identify and generate randomly</p><p>3. randomization - this is important for the replies of the chatbot to be as much originally so it will not repeat itself over and over</p><p>4. IF statements and SELECT CASE statements - for making the chatbot go over all the arrays of keywords and if the input contains them generate the proper random replay</p><p>5. for databased chatbots that uses text files as database for keywords and replies we also need to know how to OPEN the text file database for INPUT and read and load from it the keywords and replies and put then in the correct arrays</p><p>6. SUBS and FUNCTIONS - these are blocks of code that can be called and and executed whenever we need to use them instead of writing them over and over again and again these block of codes can get PARAMETERS to them which makes them flexible for re-use and they make a programmer's life much more easier</p><p>i think we can start at this point coding a bit so in the next chapter we will start by coding a very-very basic chatbot all code examples source files will be included in the github repository of this tutorial and will be available for download with this e-book tutorial. hope to see you in the next chapter :)</p><p><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%201.0%20-%20the%20most%20basic%20chatbot">chapter 1.0 - the most basic chatbot</a></p></div>
+
+
+
+</div>
+
+
+</a><a name="chapter 1.0 - the most basic chatbot">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists   tc-tagged-coding"><div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<span class="tc-tiddler-controls">
+<span class=" tc-reveal"><button aria-label="more" class="tc-btn-invisible" title="More actions">
+
+
+</button><div class=" tc-reveal" hidden="true"></div></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="edit" class="tc-btn-invisible" title="Edit this tiddler">
+
+
+</button></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="close" class="tc-btn-invisible" title="Close this tiddler">
+
+
+</button></span>
+</span>
+
+<span>
+
+<span class="tc-tiddler-title-icon" style="fill:;">
+
+</span>
+
+
+
+<h2 class="tc-title">
+chapter 1.0 - the most basic chatbot
+</h2>
+
+</span>
+
+</div>
+
+<div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div>
+</div><div class="tc-subtitle">
+<a class="tc-tiddlylink tc-tiddlylink-missing" href="#">
+
+</a> 28 hours ago
+</div>
+<div class="tc-tags-wrapper"><span class="tc-tag-list-item">
+
+
+<button class="tc-btn-invisible tc-tag-label" style="background-color:;
+fill:#333333;
+color:#333333;">
+ coding
+</button>
+<span class=" tc-reveal" hidden="true"></span>
+
+
+</span>
+</div>
+
+<div class="tc-tiddler-body"><p>hello dear friends :) we are ready to start coding and compiling and running our first chatbot code this chapter - here is the code example of our first chatbot :</p><pre><code>'set screen for console
+SCREEN 19
+
+'static arrays of keywords and replies 
+DIM AS STRING keywords1(0 TO 3) =&gt; _
+ {&quot;bad&quot;, &quot;awful&quot;, &quot;average&quot;, &quot;don't know&quot;}
+
+DIM AS STRING replies1(0 TO 3) =&gt; _
+ {&quot;i'm sorry to hear that... hope your day will get better&quot;, _
+  &quot;well there are days like that cheer up!...&quot;, _
+  &quot;don't feel bad tomorrow is a new day!...&quot;, _
+  &quot;everyone has days like that just keep trying your best&quot;}
+                                   
+DIM AS STRING keywords2(0 TO 3) =&gt; _
+ {&quot;good&quot;, &quot;wonderful&quot;, &quot;excellent&quot;, &quot;best day ever&quot;}
+
+DIM AS STRING replies2(0 TO 3) =&gt; _
+ {&quot;i'm so happy for you!&quot;, &quot;that's great! can you tell me about your day?&quot;, _
+  &quot;what did you do today?&quot;, &quot;please tell me more :)&quot;}
+
+DIM AS STRING nokeyfound(0 TO 3) =&gt; _
+ {&quot;i see go on&quot;, &quot;that is interesting&quot;, &quot;how does that make you feel?&quot;, _
+  &quot;i understand&quot;}
+
+'function for cheaking input for keywords array
+FUNCTION check_input(txt AS STRING, txt_array() AS STRING) AS boolean
+   FOR i AS INTEGER = 0 TO UBOUND(txt_array)
+      IF INSTR(txt, txt_array(i)) THEN
+         RETURN TRUE
+         
+      ENDIF
+   NEXT
+   RETURN FALSE
+END FUNCTION
+
+'begin randomization
+RANDOMIZE TIMER
+
+
+'dim a string variable for catching the input
+DIM AS STRING text
+
+'start of conversation - bot ask the user a question
+PRINT &quot;bot: hello how was your day so far? tell me please about your day...&quot;
+
+'main loop
+DO
+   'get user input
+   INPUT &quot;user: &quot;, text
+   
+   'if stetments to check keywords arrays with input and generate random replay
+   IF CHECK_INPUT(text, keywords1()) THEN
+      PRINT &quot;bot: &quot; &amp; replies1(INT(RND*(UBOUND(replies1)+1)))
+   ELSEIF CHECK_INPUT(text, keywords2()) THEN
+      PRINT &quot;bot: &quot; &amp; replies2(INT(RND*(UBOUND(replies2)+1)))
+   ELSE 
+      PRINT &quot;bot: &quot; &amp; nokeyfound(INT(RND*(UBOUND(nokeyfound)+1)))
+   ENDIF
+   
+LOOP UNTIL text = &quot;quit&quot;
+PRINT &quot;bot: goodbye!&quot;
+
+SLEEP</code></pre><p>this simple chatbot code is very self exoplanetary.</p><p>first <code>screen 19</code> to set the screen of the freebasic console </p><p>next we define 5 static arrays <code>keywords1</code> <code>replies1</code> <code>keywords2</code> <code>replies2</code> and <code>nokeyfound</code> each have 4 cells sizes from 0 to 3 and as we initialize them we assign and give them values of string since they are string arrays</p><p>next we create a Boolean function  <code>check_input</code> that simply take the input we get from the user and do a for loop on an array of string <code>txt_array() as string</code> (those are the function parameters) checking if the txt string is contained in each member of the string array if the function finds a match it returns a value of true and exits the function and if it doesn't find any keywords in the input it returns false</p><p>next we begin the randomization by <code>randomize timer</code> this will serves us when we will need to generate a random replay from the replies arrays</p><p>next we declare a string variable called <code>text</code> to catch the users input we get from the <code>input</code> command</p><p>next we print the first bot question &quot;how was your day?....&quot;</p><p>then right after we begin the main do loop which will run until the user types &quot;quit&quot;
+in that do loop we tell the program to wait for input from the user by <code>input &quot;user: &quot;, text</code>
+then when we get the input we start with if and elseif statements to check the input by calling our <code>check_input</code> function
+in any if or elseif code blocks is the statement (our function return value) is true then we print a random replay from the appropriate replay array
+if there isn't any true in any of our if or elseif statement then the program continues and enters the <code>else</code> block wish will print a random default replay and then the do loop start over from the start to wait for a input from the user and so on until the user types &quot;quit&quot; and do loop is terminated and the program ends.</p><p>and that's all folks! for this chapter</p><p>in the next chapter we will examine another simple chatbot but this time we shell use instead of static arrays of string for holding keywords and replies - we'll use dynamic arrays and learn how to load values into them :)</p><p>see you in the next chapter!</p><p><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%201.1%20-%20dynamic%20arrays%20chatbot">chapter 1.1 - dynamic arrays chatbot</a>
+</p></div>
+
+
+
+</div>
+
+
+</a><a name="chapter 1.1 - dynamic arrays chatbot">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists   tc-tagged-coding"><div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<span class="tc-tiddler-controls">
+<span class=" tc-reveal"><button aria-label="more" class="tc-btn-invisible" title="More actions">
+
+
+</button><div class=" tc-reveal" hidden="true"></div></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="edit" class="tc-btn-invisible" title="Edit this tiddler">
+
+
+</button></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="close" class="tc-btn-invisible" title="Close this tiddler">
+
+
+</button></span>
+</span>
+
+<span>
+
+<span class="tc-tiddler-title-icon" style="fill:;">
+
+</span>
+
+
+
+<h2 class="tc-title">
+chapter 1.1 - dynamic arrays chatbot
+</h2>
+
+</span>
+
+</div>
+
+<div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div>
+</div><div class="tc-subtitle">
+<a class="tc-tiddlylink tc-tiddlylink-missing" href="#">
+
+</a> 27 hours ago
+</div>
+<div class="tc-tags-wrapper"><span class="tc-tag-list-item">
+
+
+<button class="tc-btn-invisible tc-tag-label" style="background-color:;
+fill:#333333;
+color:#333333;">
+ coding
+</button>
+<span class=" tc-reveal" hidden="true"></span>
+
+
+</span>
+</div>
+
+<div class="tc-tiddler-body"><p>hello dear friends! :) in this chapter we will examine another code example of a basic chatbot.</p><p>this code is similar to the previous chapter the only difference is that we use dynamic arrays and load them with for loops values of strings from the DATA statements at the bottom of the code (if you are not sure what DATA is used for i suggest you look at FB language help documentations) we declare our dynamic arrays of strings with <code>redim as string keywords1(0), replies1(0)</code>... etc and we created a sub called <code>sAppend</code> that takes a dynamic string array and adds to it a string value - </p><p>NOTE: if you look at the code carefully you'll see that using <code>sAppend</code> will load the dynamic arrays with value and resize them BUT the first cell <code>array(0)</code> is always left EMPTY! this is important to remember if and when we will try to generate a random replay from one of them...</p><p>we call and use <code>sAppend</code> sub when we load the dynamic arrays with string values with the use of <code>read</code> command (i encourage you to look in the FB language help documentation guide for any question you got about a command or concept you don't understand) we load them with <code>for</code> loops for each dynamic array the loops index counter the <code>i as integer</code> must be exactly the right number of values we want the array to hold (in our case each array loads 4 values so in total we have the first cell 0 which is empty and then cells 1, 2, 3, 4 holding with string values</p><p>as for the rest of the chatbot code it is the same as the pervious chapter.</p><p>here is our dynamic arrays chatbot code:</p><pre><code>'set screen for console
+SCREEN 19
+
+'declare dynamic arrays of string instead of static ones
+REDIM AS STRING keywords1(0), replies1(0), keywords2(0)
+REDIM AS STRING replies2(0), nokeyfound(0)
+
+'sub for loading values to a dynamic array of string
+SUB sAppend(arr() AS STRING, item AS STRING)
+   REDIM PRESERVE arr(LBOUND(arr) TO UBOUND(arr) +1)
+   arr(UBOUND(arr)) = item
+END SUB
+
+'for catching the values from the DATA at the bottom
+DIM r AS STRING
+
+'for loops to load each dynamic array with the values read from the DATA at the bottom
+FOR i AS INTEGER = 1 TO 4
+   READ r
+   SAPPEND keywords1(), r 
+NEXT
+
+FOR i AS INTEGER = 1 TO 4
+   READ r
+   SAPPEND replies1(), r
+NEXT
+
+FOR i AS INTEGER = 1 TO 4
+   READ r
+   SAPPEND keywords2(), r
+NEXT
+
+FOR i AS INTEGER = 1 TO 4
+   READ r
+   SAPPEND replies2(), r
+NEXT
+
+FOR i AS INTEGER = 1 TO 4
+   READ r
+   SAPPEND nokeyfound(), r
+NEXT
+
+'function for cheaking input for keywords array
+FUNCTION check_input(txt AS STRING, txt_array() AS STRING) AS boolean
+   FOR i AS INTEGER = 0 TO UBOUND(txt_array)
+      IF INSTR(txt, txt_array(i)) THEN
+         RETURN TRUE
+         
+      ENDIF
+   NEXT
+   RETURN FALSE
+END FUNCTION
+
+'begin randomization
+RANDOMIZE TIMER
+
+'dim a string variable for catching the input
+DIM AS STRING text
+
+'start of conversation - bot ask the user a question
+PRINT &quot;bot: hello how was your day so far? tell me please about your day...&quot;
+
+'main loop
+DO
+   'get user input
+   INPUT &quot;user: &quot;, text
+   
+   'if stetments to check keywords arrays with input and generate random replay
+   IF CHECK_INPUT(text, keywords1()) THEN
+      PRINT &quot;bot: &quot; &amp; replies1(INT(RND*(UBOUND(replies1))+1))
+   ELSEIF CHECK_INPUT(text, keywords2()) THEN
+      PRINT &quot;bot: &quot; &amp; replies2(INT(RND*(UBOUND(replies2))+1))
+   ELSE 
+      PRINT &quot;bot: &quot; &amp; nokeyfound(INT(RND*(UBOUND(nokeyfound))+1))
+   ENDIF
+   
+LOOP UNTIL text = &quot;quit&quot;
+PRINT &quot;bot: goodbye!&quot;
+
+SLEEP
+
+'DATA structures lines
+'keywods1
+DATA &quot;bad&quot;
+DATA &quot;awful&quot;
+DATA &quot;average&quot;
+DATA &quot;don't know&quot;
+
+'replies1
+DATA &quot;i'm sorry to hear that... hope your day will get better&quot;
+DATA &quot;well there are days like that cheer up!...&quot;
+DATA &quot;don't feel bad tomorrow is a new day!...&quot;
+DATA &quot;everyone has days like that just keep trying your best
+
+'keywords2
+DATA &quot;good&quot;
+DATA &quot;wonderful&quot;
+DATA &quot;excellent&quot;
+DATA &quot;best day ever&quot;
+
+'replies2
+DATA &quot;i'm so happy for you!&quot;
+DATA &quot;that's great! can you tell me about your day?&quot;
+DATA &quot;what did you do today?&quot;
+DATA &quot;please tell me more :)&quot;
+
+'nokeyfound
+DATA &quot;i see go on&quot;
+DATA &quot;that is interesting&quot;
+DATA &quot;how does that make you feel?&quot;
+DATA &quot;i understand&quot;</code></pre><p>when you'll compile and run this code you will not see any difference between this chatbot and the previous chatbot the are identical in their functionality however a look under the hood will reveal the difference between them.</p><p>by learning to use dynamic arrays we are now ready to take the next step and in the next chapter we will start coding a chatbot with a database of keywords and replies and we'll learn to read the database text file and load the values to each appropriate array this will give our chatbot much more flexibility. </p><p>i wish to ask you if you can to use for the text file the program &quot;Notepad++&quot; i highly recommend it to you if you do not agree and wish to use any other text editor program that is fine too you may also may use the FB IDE itself to create and edit the database text file...</p><p>we also since we are going to be coding two files one will be the BAS main file of the chatbot program and the other the text file as database we will start to use the IDE for Projects from now on since we are no longer dealing with one stand alone file so make sure you know your IDE well.</p><p>i'll see you my friends on the next chapter :)</p><p><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%202.0%20-%20databased%20chatbot">chapter 2.0 - databased chatbot</a>  </p></div>
+
+
+
+</div>
+
+
+</a><a name="chapter 2.0 - databased chatbot">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists   tc-tagged-coding"><div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<span class="tc-tiddler-controls">
+<span class=" tc-reveal"><button aria-label="more" class="tc-btn-invisible" title="More actions">
+
+
+</button><div class=" tc-reveal" hidden="true"></div></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="edit" class="tc-btn-invisible" title="Edit this tiddler">
+
+
+</button></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="close" class="tc-btn-invisible" title="Close this tiddler">
+
+
+</button></span>
+</span>
+
+<span>
+
+<span class="tc-tiddler-title-icon" style="fill:;">
+
+</span>
+
+
+
+<h2 class="tc-title">
+chapter 2.0 - databased chatbot
+</h2>
+
+</span>
+
+</div>
+
+<div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div>
+</div><div class="tc-subtitle">
+<a class="tc-tiddlylink tc-tiddlylink-missing" href="#">
+
+</a> 9 hours ago
+</div>
+<div class="tc-tags-wrapper"><span class="tc-tag-list-item">
+
+
+<button class="tc-btn-invisible tc-tag-label" style="background-color:;
+fill:#333333;
+color:#333333;">
+ coding
+</button>
+<span class=" tc-reveal" hidden="true"></span>
+
+
+</span>
+</div>
+
+<div class="tc-tiddler-body"><p>hello dear friends :) and welcome to our present chapter - databased chatbot...</p><p>at this point i would like you to create a new project in your FB IDE and before we start typing (or copy/paste) our code of the chatbot i'll ask you to create in the project folder a text file called &quot;database.txt&quot; (or if your on linux &quot;database.TXT&quot;) and copy and paste the following text 'as-it- is':</p><pre><code>
+
+k1:bad
+k1:awful
+k1:average
+k1:don't know
+
+r1:i'm sorry to hear that... hope your day will get better
+r1:well there are days like that cheer up!...
+r1:don't feel bad tomorrow is a new day!...
+r1:everyone has days like that just keep trying your best
+
+k2:good
+k2:wonderful
+k2:excellent
+k2:best day ever
+
+r2:i'm so happy for you!
+r2:that's great! can you tell me about your day?
+r2:what did you do today?
+r2:please tell me more :)
+
+d1:i see go on
+d1:that is interesting
+d1:how does that make you feel?
+d1:i understand
+
+e1:</code></pre><p>this is how our database text file will look for this chapter. now let's take a look at it and i'll explain a bit</p><p>the three characters in each row of text like <code>k1:</code> <code>r1:</code> <code>k2:</code> <code>r2:</code> <code>d1:</code> <code>e1:</code> are what can be called TAGS that identifies each row of text so when we'll read the text file we can know to which array it fits... for instance <code>k1:</code> rows are rows of text that belong to <code>keywords1(0)</code> dynamic string array while <code>r2:</code> TAGGED rows belong to <code>replies2(0)</code> array and <code>d1:</code> rows will go to <code>nokeyfound(0)</code> array for default replies and so on... the last tag <code>e1:</code> is a special tag to tell the program to stop the reading of the file since there are no more rows of text below - (our program will read the file in a <code>while loop</code> with <code>line input</code> so it will go over each line from top to bottom) WE NEED TO REMEMBER THOSE TAGS WHEN WE CODE OUR CHATBOT PROGRAM especially when coding the load/read database file and assigning each tagged row to the proper array...</p><p>so far for the database text file part now it's time to the main BAS program code file... and here is the code of the chatbot for this chapter (copy-paste it to the main BAS file of your project)</p><pre><code>'set console window title
+WINDOWTITLE(&quot;chatbot chapter 2.0 - databased chatbot&quot;)
+'set screen for console
+SCREEN 19
+
+'declare SHARED (GLOBAL) dynamic arrays of string instead of static ones
+REDIM SHARED AS STRING keywords1(0), replies1(0), keywords2(0)
+REDIM SHARED AS STRING replies2(0), nokeyfound(0)
+
+'sub for loading values to a dynamic array of string
+SUB sAppend(arr() AS STRING, item AS STRING)
+   REDIM PRESERVE arr(LBOUND(arr) TO UBOUND(arr) +1)
+   arr(UBOUND(arr)) = item
+END SUB
+
+'load database file into arrays sub
+SUB loadArrays(f AS STRING)
+   DIM AS LONG h = FREEFILE()
+   DIM AS STRING fileline
+   OPEN f FOR INPUT AS #h
+   WHILE NOT EOF(h)
+      LINE INPUT #h, fileline
+      SELECT CASE LEFT(fileline, 3)
+         CASE &quot;k1:&quot;
+            SAPPEND keywords1(), TRIM(MID(fileline, 4))
+         CASE &quot;r1:&quot;
+            SAPPEND replies1(), TRIM(MID(fileline, 4))
+         CASE &quot;k2:&quot;
+            SAPPEND keywords2(), TRIM(MID(fileline, 4))
+         CASE &quot;r2:&quot;
+            SAPPEND replies2(), TRIM(MID(fileline, 4))
+         CASE &quot;d1:&quot;
+            SAPPEND nokeyfound(), TRIM(MID(fileline, 4))
+         CASE &quot;e1:&quot;
+            EXIT while
+      END SELECT
+   WEND
+   CLOSE #h
+END SUB
+
+'function for cheaking input for keywords array
+FUNCTION check_input(txt AS STRING, txt_array() AS STRING) AS boolean
+   FOR i AS INTEGER = 0 TO UBOUND(txt_array)
+      IF INSTR(txt, txt_array(i)) THEN
+         RETURN TRUE
+      ENDIF
+   NEXT
+   RETURN FALSE
+END FUNCTION
+
+'sub for printing properly the chatbot replies
+SUB bot_speak(t AS STRING)
+   PRINT &quot;bot: &quot; &amp; t
+   PRINT
+END SUB
+
+'begin randomization
+RANDOMIZE TIMER
+
+'function for doing the input-keywords-replies process
+FUNCTION bot_brain(txt AS STRING) AS STRING
+   IF CHECK_INPUT(txt, keywords1()) THEN
+      RETURN replies1(INT(RND*(UBOUND(replies1))+1))
+   ELSEIF CHECK_INPUT(txt, keywords2()) THEN
+      RETURN replies2(INT(RND*(UBOUND(replies2))+1))
+   ELSE 
+      RETURN nokeyfound(INT(RND*(UBOUND(nokeyfound))+1))
+   ENDIF   
+END FUNCTION
+
+'call loadarray sub to load database to arrays
+LOADARRAYS(&quot;database.TXT&quot;)
+
+
+'dim a string variable for catching the input
+DIM AS STRING text
+'dim another string variable to catch the bot_brain function value
+DIM AS STRING rply 
+'start of conversation - bot ask the user a question
+BOT_SPEAK(&quot;hello how was your day so far? tell me please about your day...&quot;)
+
+'main loop for the conversation with the chatbot
+DO
+   'get user input
+   INPUT &quot;user: &quot;, text
+   PRINT
+   rply = BOT_BRAIN(text)
+   BOT_SPEAK(rply)
+
+LOOP UNTIL text = &quot;quit&quot;
+BOT_SPEAK(&quot;goodbye!&quot;)
+
+SLEEP
+</code></pre><p>take a close look at the code - instead of loading the dynamic arrays with <code>for loop</code>'s we created a sub called <code>loadarrays</code> to lread the database and load each row to the proper array - we use here string manipulation with <code>left</code> and <code>trim</code> and <code>mid</code> commands and basically the arrays are being loaded with their values while the database file is being read...</p><p>another change is we created a function called <code>bot_brain</code> that does all the input checks if input contains any keywords or not and return the randomly generated replay (instead of checking it inside the main <code>do loop</code>)</p><p>we also created a sub called <code>bot_speak</code> to handle the printing of the chatbot replay on the screen  </p><p>as a result of all this we saved a lot of coding lines and the main <code>do loop</code> is now much less long</p><p>if anything is not fully understood please look at the FB language help documentation's (press F1)</p><p>while this chatbot is more flexible since if we want to add more keywords or replies all we have to do is change and edit the database text file or add more arrays (and more TAGGED rows) to the code and database... yet still one has to know how to change and modify the program or database - and what is we want a self learning chatbot? one that learns by interacting with the user new keywords and replies? - this is a new kind of chatbot - a learning chatbot and we'll discuss this kind of chatbot in our next chapter called &quot;the learning chatbot (baby chatbot)&quot;</p><p><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%203.0%20-%20the%20learning%20chatbot%20or%20baby%20chatbot">chapter 3.0 - the learning chatbot or baby chatbot</a> 
+  </p></div>
+
+
+
+</div>
+
+
+</a><a name="chapter 3.0 - the learning chatbot or baby chatbot">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists   tc-tagged-coding"><div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<span class="tc-tiddler-controls">
+<span class=" tc-reveal"><button aria-label="more" class="tc-btn-invisible" title="More actions">
+
+
+</button><div class=" tc-reveal" hidden="true"></div></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="edit" class="tc-btn-invisible" title="Edit this tiddler">
+
+
+</button></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="close" class="tc-btn-invisible" title="Close this tiddler">
+
+
+</button></span>
+</span>
+
+<span>
+
+<span class="tc-tiddler-title-icon" style="fill:;">
+
+</span>
+
+
+
+<h2 class="tc-title">
+chapter 3.0 - the learning chatbot or baby chatbot
+</h2>
+
+</span>
+
+</div>
+
+<div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div>
+</div><div class="tc-subtitle">
+<a class="tc-tiddlylink tc-tiddlylink-missing" href="#">
+
+</a> 3 hours ago
+</div>
+<div class="tc-tags-wrapper"><span class="tc-tag-list-item">
+
+
+<button class="tc-btn-invisible tc-tag-label" style="background-color:;
+fill:#333333;
+color:#333333;">
+ coding
+</button>
+<span class=" tc-reveal" hidden="true"></span>
+
+
+</span>
+</div>
+
+<div class="tc-tiddler-body"><p>hello dear friends! :) and welcome to the next chapter - learning chatbot... without further doe here is the code for this chapter</p><pre><code>'set console window title
+WINDOWTITLE(&quot;chatbot chapter 3.0 - a learning chatbot&quot;)
+'set screen for console
+SCREEN 19
+
+'declare two string dynamic arrays for keywords(answers) and replies(questions)
+REDIM SHARED AS STRING ans(0), ques(0)
+
+'declare two conctants of string for the two databases text files
+CONST AS STRING answers = &quot;answers.txt&quot;
+CONST AS STRING questions = &quot;questions.txt&quot;
+
+'open files for append and by so creating the text files
+DIM AS LONG h = FREEFILE()
+OPEN answers FOR APPEND AS #h
+CLOSE #h
+OPEN questions FOR APPEND AS #h
+CLOSE #h
+
+'sub for loading values to a dynamic array of string
+SUB sAppend(arr() AS STRING, item AS STRING)
+   REDIM PRESERVE arr(LBOUND(arr) TO UBOUND(arr) +1)
+   arr(UBOUND(arr)) = item
+END SUB
+
+'sub for loading keywords(answers) and replies(questions)
+'from databases files to the two arrays ans() and ques()
+SUB loadQA
+   DIM h AS LONG = FREEFILE()
+   DIM fline AS STRING
+   OPEN answers FOR INPUT AS #h
+      WHILE NOT EOF(h)
+         LINE INPUT #h, fline
+         SAPPEND ans(), fline
+      WEND
+   CLOSE #h
+   OPEN questions FOR INPUT AS #h
+      WHILE NOT EOF(h)
+         LINE INPUT #h, fline
+         SAPPEND ques(), fline
+      WEND
+   CLOSE #h
+END SUB
+
+'sub for printing properly the chatbot replies
+SUB bot_speak(t AS STRING)
+   PRINT &quot;bot: &quot; &amp; t
+   PRINT
+END SUB
+
+'this sub is important it checks is user input is new or not
+'if it already knows the input then it will replay the learned output
+'if the input is new then it will ask the user to give the proper replay
+'and it will store it in the databases and in the arrays
+SUB answersQuestions(txt AS STRING)
+var result = 0
+dim as boolean Found = false
+DIM h AS LONG = FREEFILE()
+DIM inpt AS STRING
+FOR i AS INTEGER = 0 TO UBOUND(ans)
+	IF instr(txt, ans(i)) &lt;&gt; 0 OR txt = ans(i) THEN
+		found = true
+		BOT_SPEAK ques(i)
+		EXIT FOR
+	END IF
+	NEXT i
+	IF found = false THEN
+		INPUT &quot;enter new input: &quot;, inpt
+		PRINT : BOT_SPEAK inpt
+		OPEN answers FOR APPEND AS #h
+		PRINT #h, txt
+		CLOSE #h
+		OPEN questions FOR APPEND AS #h
+		PRINT #h, inpt
+		CLOSE #h
+		sAppend ans(), txt
+		sAppend ques(), inpt
+	END IF
+END SUB
+
+'the main sub where it all comes together
+SUB main()
+   DIM txt AS STRING
+   loadQA()
+   DO
+      INPUT &quot;user: &quot;, txt: PRINT
+      txt = LCASE(txt)
+      answersQuestions(txt)
+   LOOP UNTIL txt = &quot;quit&quot;
+   SLEEP 
+END SUB
+
+MAIN()</code></pre><p>when you'll compile and run this program you'll see that two text files have been added to your project folder &quot;answers.txt&quot; and &quot;questions.txt&quot; these are the new keywords and new replies databases text files and they have been created by the program itself (when you open a file for <code>append</code> if the file doesn't already exists it will be created)</p><p>so what do we got? two databases files and two dynamic strings arrays at the beginning of the program the arrays are loaded with the data from the databases of keywords and replies (or answers and questions) then when you speak to the chatbot it checks if the input you give it is new or not if not then it will replay the already learned replay if it is new it will ask you for &quot;enter new output:&quot; and what ever you typed before will be added to the keywords and what ever you type this time will be added to the replies and since the number of rows of the databases are align then keyword in row 5 in the &quot;answers.txt&quot; file will give you replay in row 5 in &quot;questions.txt&quot; file etc... and of course after you enter new output the bot will repeat it and print it on the screen... that's basically the logic on how this learning chatbot code works...</p><p>we are getting close to the end of this tutorial only one or two more chapters left to go...</p><p>in the next chapter in the github repository folder of the next chapter there is a surprise for you my friends :) you will find there a project called &quot;chatbot Julie v1&quot; and it's one of my many chatbots i coded in the last few years but this one is in freeBASIC (the rest are in other languages) i've worked on this chatbot for a few weeks maybe a month or so in total i will not give any code examples in the next chapter instead i'll just discuss some of chatbot Julie v1 functionalities and abilities i give you this chatbot just to give you an idea how far you can go on with coding  (as to say the sky is the limit)... i'll see you in the next chapter...</p><p><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%204.0%20-%20chatbot%20Julie%20V1">chapter 4.0 - chatbot Julie V1</a></p></div>
+
+
+
+</div>
+
+
+</a><a name="chapter 4.0 - chatbot Julie V1">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists   tc-tagged-demo"><div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<span class="tc-tiddler-controls">
+<span class=" tc-reveal"><button aria-label="more" class="tc-btn-invisible" title="More actions">
+
+
+</button><div class=" tc-reveal" hidden="true"></div></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="edit" class="tc-btn-invisible" title="Edit this tiddler">
+
+
+</button></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="close" class="tc-btn-invisible" title="Close this tiddler">
+
+
+</button></span>
+</span>
+
+<span>
+
+<span class="tc-tiddler-title-icon" style="fill:;">
+
+</span>
+
+
+
+<h2 class="tc-title">
+chapter 4.0 - chatbot Julie V1
+</h2>
+
+</span>
+
+</div>
+
+<div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div>
+</div><div class="tc-subtitle">
+<a class="tc-tiddlylink tc-tiddlylink-missing" href="#">
+
+</a> 2 hours ago
+</div>
+<div class="tc-tags-wrapper"><span class="tc-tag-list-item">
+
+
+<button class="tc-btn-invisible tc-tag-label" style="background-color:;
+fill:#333333;
+color:#333333;">
+ demo
+</button>
+<span class=" tc-reveal" hidden="true"></span>
+
+
+</span>
+</div>
+
+<div class="tc-tiddler-body"><p>hello dear friends :) welcome to the almost last chapter of this tutorial...</p><p>if you'll open the folder named &quot;chapter 4.0&quot; you will find the code of the project named &quot;chatbot julie v1&quot; this chatbot was coded as a poseidonFB IDE project not FbEdit IDE project yet you can still compile and run the main BAS file under FbEdit IDE and it should work just fine...</p><p>one of the first things you'll notice is TTS (Text-To-Speech) ability the chatbots doesn't just print the replies but it speaks them this is accomplish by using a TTS command-line engine called &quot;voice.exe&quot; it's a small file in the folder and each time the bot replies it uses the <code>shell</code> command to pass the replay to that TTS engine file and by so the bot speaks and says it's replay by voice (this should work both on windows and linux yet windows has better voices then linux)...</p><p>another thing you may notice is that chatbot julie is a mixed kind chatbot it is a databased chatbot yet it is also a learning chatbot (that is what ever it doesn't already knows it will learn)</p><p>chatbot julie has a rich database and if you'll take a look at it you'll see an explanation in the database itself about the different TAGS it uses - if you want to add to it or modify it be my guest...</p><p>this chatbot also has build in commands (if you'll type &quot;–help&quot; you'll see the full list of them) this is done by splitting the thread of the program into three subs the first main sub is for the commands and the other two are <code>userQuestions</code> sub for conversations and <code>botQuestions</code> sub for the bot to ask you questions (such as &quot;what is bothering you?&quot;) there is a use of a Boolean variable <code>isUserQuestion</code> if it's true then the input goes to the <code>userQuestions</code> sub if it's false then it goes to <code>botQuestions</code> sub...</p><p>chatbot Julie can tell a few jokes read a few poems or write a new one especially for you... it also stores all conversations into a log (all databases and logs can be erased with command &quot;–delete log&quot;) it also has a timer countdown set for one hour (for preventing addictive chatting) chatbot julie is sensitive to racial or sexist or offensive language if you talk dirty to her she will warn you and if you continue the chatbot will close itself... and it has other commands all listed in the help commands list (type &quot;–help&quot;)</p><p>in the end overall chatbot julie v1 was coded and designed to be an honest kind companion chat bot - the kind you can talk to to pass a lonely evening for a while...</p><p>i'm considering if this will be our last chapter in our journey together or what surprise i'll prepare for you in the next final ending chapter  my friends :)</p><p>see you in the next chapter...</p><p><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#ending%20chapter%205.0%20-%20chatbots%20talking%20to%20each%20other">ending chapter 5.0 - chatbots talking to each other</a></p></div>
+
+
+
+</div>
+
+
+</a><a name="ending chapter 5.0 - chatbots talking to each other">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists   tc-tagged-demo"><div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<span class="tc-tiddler-controls">
+<span class=" tc-reveal"><button aria-label="more" class="tc-btn-invisible" title="More actions">
+
+
+</button><div class=" tc-reveal" hidden="true"></div></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="edit" class="tc-btn-invisible" title="Edit this tiddler">
+
+
+</button></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="close" class="tc-btn-invisible" title="Close this tiddler">
+
+
+</button></span>
+</span>
+
+<span>
+
+<span class="tc-tiddler-title-icon" style="fill:;">
+
+</span>
+
+
+
+<h2 class="tc-title">
+ending chapter 5.0 - chatbots talking to each other
+</h2>
+
+</span>
+
+</div>
+
+<div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div>
+</div><div class="tc-subtitle">
+<a class="tc-tiddlylink tc-tiddlylink-missing" href="#">
+
+</a> 32 seconds ago
+</div>
+<div class="tc-tags-wrapper"><span class="tc-tag-list-item">
+
+
+<button class="tc-btn-invisible tc-tag-label" style="background-color:;
+fill:#333333;
+color:#333333;">
+ demo
+</button>
+<span class=" tc-reveal" hidden="true"></span>
+
+
+</span>
+</div>
+
+<div class="tc-tiddler-body"><p>well this is the final chapter of this tutorial and if you made it so far that congratulation. :)</p><p>in the folder &quot;chapter 5.0&quot; you'll find an old code written in qbasic (freebasic support qbasic with the option <code>#lang: &quot;qb&quot;</code> at top of the code. this is not my code it's a code by some old programmer from the QB64 forum that i modified long time ago. it's a chat simulation between two chat bots Eliza and Parrany to terminate the program press the escape button...</p><p>well time to depart but we may meet again maybe in another tutorial who knows... :)</p><p>goodbye my friends and i hope i've inspired you to code chatbots or to code - i hope you will forgive my broken bad english and take from this tutorial the knowledge that you need to go on with your journey in life...</p><p>yours - ron77</p></div>
+
+
+
+</div>
+
+
+</a><a name="Let's Build a ChatBot with freeBASIC by ronen blumberg (ron77)">
+<div class="tc-tiddler-frame tc-tiddler-view-frame tc-tiddler-exists   "><div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<span class="tc-tiddler-controls">
+<span class=" tc-reveal"><button aria-label="more" class="tc-btn-invisible" title="More actions">
+
+
+</button><div class=" tc-reveal" hidden="true"></div></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="edit" class="tc-btn-invisible" title="Edit this tiddler">
+
+
+</button></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal" hidden="true"></span><span class=" tc-reveal"><button aria-label="close" class="tc-btn-invisible" title="Close this tiddler">
+
+
+</button></span>
+</span>
+
+<span>
+
+<span class="tc-tiddler-title-icon" style="fill:;">
+
+</span>
+
+
+
+<h2 class="tc-title">
+Let's Build a ChatBot with freeBASIC by ronen blumberg (ron77)
+</h2>
+
+</span>
+
+</div>
+
+<div class="tc-tiddler-info tc-popup-handle tc-reveal" hidden="true"></div>
+</div><div class="tc-subtitle">
+<a class="tc-tiddlylink tc-tiddlylink-missing" href="#">
+
+</a> 2 hours ago
+</div>
+<div class="tc-tags-wrapper"></div>
+
+<div class="tc-tiddler-body"><p><a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%200.1%20introduction%20-%20pre-preparations">chapter 0.1 introduction - pre-preparations</a> :
+<a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%200.2%20-%20what%20is%20a%20chatbot">chapter 0.2 - what is a chatbot</a> :
+<a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%200.3%20-%20the%20different%20chatbots%20types">chapter 0.3 - the different chatbots types</a> :
+<a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%200.4%20-%20chatbots%20logic">chapter 0.4 - chatbots logic</a> :
+<a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%201.0%20-%20the%20most%20basic%20chatbot">chapter 1.0 - the most basic chatbot</a> :
+<a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%201.1%20-%20dynamic%20arrays%20chatbot">chapter 1.1 - dynamic arrays chatbot</a> :
+<a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%202.0%20-%20databased%20chatbot">chapter 2.0 - databased chatbot</a> :
+<a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%203.0%20-%20the%20learning%20chatbot%20or%20baby%20chatbot">chapter 3.0 - the learning chatbot or baby chatbot</a> :
+<a class="tc-tiddlylink tc-tiddlylink-resolves" href="#chapter%204.0%20-%20chatbot%20Julie%20V1">chapter 4.0 - chatbot Julie V1</a> :
+<a class="tc-tiddlylink tc-tiddlylink-resolves" href="#ending%20chapter%205.0%20-%20chatbots%20talking%20to%20each%20other">ending chapter 5.0 - chatbots talking to each other</a></p></div>
+
+
+
+</div>
+
+
+</a>
+
+</p>
+</section>
+</body>
+</html>

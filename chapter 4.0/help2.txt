@@ -1,0 +1,5 @@
+					Julie help - command list p.2
+
+11. commands "tell a joke" and "read a poem" will make the bot tell a joke
+or read a poem command "write a poem" will make the bot generate a random 
+poem from it's databases

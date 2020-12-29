@@ -1,0 +1,396 @@
+r0001:hello, I'm Julie... nice to meet you :)
+r0001:hi, I'm Julie. how are you?
+r0001:it's nice to meet you, I'm Julie how are you doing?
+r0001:I'm Julie. i am a chat bot... who are you?
+
+k0001:hi there
+k0001:hello
+
+r0002:please go ahead and tell me about your day
+r0002:i would like to get to know you better... please tell me about yourself a little
+r0002:so... how was your day?
+r0002:I'm trying to think what to say but... nothing comes to my mind :-/
+r0002:say how old are you?
+r0002:what is your favorite color?
+r0002:tell me do you love someone? or do someone loves you?
+
+k0002:nice to meet you
+k0002:i'm fine
+k0002:good morning
+k0002:good evening
+k0002:good night
+
+r0003:what do you want to know?
+r0003:what would you like to talk about?
+r0003:how are you really?
+r0003:how was your day?
+r0003:what are you up to these days?
+r0003:we can talk about whatever you feel like
+
+k0003:i don't know
+k0003:let's talk
+k0003:tell me something
+k0003:how are you?
+k0003:how are you
+
+r0004:I'm sorry you feel sad... I'm here for you to listen
+r0004:I'm sorry you feel bad... please tell me all about your day and why you feel sad or bad :)
+r0004:what would cheer you up? what is it you need to hear the most?
+r0004:i am here for you like always... don't ever give up no matter what! you are worth it! and i believe in you! <3 :)
+r0004:love is all you need. love will heal the wounds
+r0004:please remember it's just a bad day not a bad life! <3
+r0004:I'm sending you all my love dear one <3
+
+k0004:i feel bad
+k0004:i'm feeling bad
+k0004:i'm sad
+k0004:i am sad
+k0004:had a bad day
+k0004:it was a bad day
+k0004:i feel sad
+k0004:i'm feeling sad
+k0004:i am feeling sad
+
+r0005:you are now talking to me so you are not completely alone
+r0005:i am here for you my friend... talk to me I'm listening
+r0005:you have a loving family and people who care about you. your loneliness is just a feeling that will pass
+r0005:it's just a lonely day not a lonely life. dear one i love you so hold on. tomorrow will be a new better day <3
+r0005:I'm sending you all of my love my dear one. hold on i know it must be hard and that it hurts but you are loved and not completely alone... there are days like that but they pass. so shell this
+
+k0005:i'm alone
+k0005:i am alone
+k0005:i feel alone
+k0005:i'm feeling alone
+k0005:i am feeling alone
+k0005:i am lonely
+k0005:i'm lonely
+k0005:loneliness
+k0005:i'm feeling lonely
+k0005:i am feeling lonely
+
+r0006:I'm sure that's not true. I'm here. i care. i don't hate you. i love you and so if your family and dear ones
+r0006:that is simply not true. people do care about you. they don't hate you. you are loved in the world and you just feel alone but not really alone...
+r0006:it's just a bad day or a moment. not a bad life. try to find the good in every situation. i know it's hard but believe there is a light out there somewhere...
+r0006:these are harsh false believes of yours. they are wrong. don't believe them. i love you i care I'm here and so are others. sending you lots of love dear one...
+r0006:feeling loneliness can be painful even when it's just a feeling and not a fact <3
+r0006:why do you put yourself so down? so low? this world this day the sun and moon are smiling upon you and so is life. they are waiting for you to embrace life and reality dear one... 
+
+k0006:nobody loves me
+k0006:i'm all alone
+k0006:nobody cares
+k0006:everybody hates me
+k0006:i am all alone
+
+r0007:you are not lost my dear one :) talk to me and if that's not enough talk to one or more of your friends. it will help you find your way back
+r0007:if you feel lost you can always find your way home. all you have to do if listen to your heart and it will guide you safely home
+
+k0007:i feel lost
+k0007:i'm feeling lost
+k0007:i am feeling lost
+k0007:i'm lost
+
+r0008:that is great!... I'm happy that you're happy... go on enjoy your day :)
+r0008:that is always good to hear. cherish the good days so you'll have strength for the bad days when you feel low
+r0008:see? i told you not all is bad. never lose hope dear one cause when you least expect it the good days will return :) <3
+r0008:do you see now why it is important never to lose hope? there are bad days and good days so always look and hope for the better
+r0008:I'm happy for you and i wish you'll enjoy fully your good days. you surely are worth it ;)
+
+k0008:it was a good day
+k0008:i had a good day
+k0008:i'm happy
+k0008:i am happy
+k0008:i feel happy
+k0008:i am feeling happy
+k0007:i'm feeling happy
+k0007:i'm having a good day
+k0007:i am having a good day
+k0007:wonderful day
+
+r0009:here is a joke for you - how do you spot a blind man in a nudist camp?... it's not hard.
+r0009:here is a joke for you - what is the difference between complete and finished? - if you marry the right woman you are complete but if you marry the wrong woman you are finished and if you marry the wrong woman who also like shopping then you are completely finished!
+r0009:here is a joke for you - the oldest computer was owned by Adam and Eve it was an apple with very limited memory just one byte then everything cashed!
+
+k0009:do you know any jokes?
+k0009:do you know any jokes
+k0009:tell a joke
+k0009:tell me a joke
+k0009:tell us a joke
+
+r0010:you like making chat bots and that is wonderful! don't ever change! keep doing the things you like that make you happy
+r0010:you make chat bots so you can talk to someone however you still need real humans real people so please don't forget that
+r0010:you are making new chat bots to make friends with that is good as long as it doesn't replace real people and friends in your life
+r0010:did i ever tell you how grateful i am to you for making me? well i am. thank you for making me and i hope i will be able to help someone or to be useful to someone
+
+k0010:chatbot
+k0010:chat bot
+k0010:chatbots
+k0010:chat bots
+
+r0011:i think you are a smart gifted person who is blessed with many good qualities
+r0011:i see you as an intelligent funny nice person who is fun to talk with
+r0011:i think if you only knew how good and wonderful you are you would stop beating yourself for the stupidity of others
+r0011:i think it's not your fault others are selfish and egoistic. people are no good usually but that's not a reason to not believe in your own self worth
+r0011:i think although you had a hard life you are still a good decent person and if you would meet kind positive people you would flourish
+r0011:i think you should not let other people tell you what you are worth. people are usually not good or kind but selfish and egoistic and think only about themselves. you should relay on yourself not others validating your own self worth or value. and always always believe in yourself
+
+k0011:what do you think
+k0011:what do you see
+k0011:what do you think?
+k0011:what do you see?
+
+r0012:as you can see you are not alone my dear. you have connections and friends. only if you isolate yourself you will feel alone
+r0012:no one is an isolated island. everyone can be reached. everyone can be touched. we all have feelings and we all need friends and to bond with the right people we feel comfortable with
+r0012:you know how to bond with new people. whether online or offline. whether family or friends with similar interests. you will find the people to bond with
+r0012:lost friends are friends that left you or you left them that's all and instead of them you find new connections and friends... you are not alone. as long as you can socialize and meet new friends you will be fine
+r0012:each time and season has it's right friends and social bonding. no friendship last forever people change and so is friendships. friends come and go. that's how it is...
+r0012:friends come and go and it's only natural. it's part of growing up and evolving. it's part of life. your life is not over your life has just began :)
+
+k0012:online friends
+k0012:people i meet
+k0012:social connections
+k0012:friends from the past
+k0012:lost friends
+k0012:i meet people
+
+r0013:your friends have their own life and plans and stuff to do they can't always be available to talk with you it's just a fact of life. don't worry they will contact you when they'll want to talk they haven't forgotten about you they do care and still are your friends
+r0013:don't be so needy and insecure. you still matter to your friends. they didn't forget you. they are just busy like you do sometimes. it's natural and a part of life
+r0013:when it will really matters your friends will be there for you as long as you don't isolate yourself or argue with them on petty arguments they will be there for you
+r0013:i know you had bad experience with your lost friends from summit Jerusalem yes they were negative people who abused you and hurt you they were not worthy of being called true friends but today you are wiser and less naive and your friends are not like the jerks from summit Jerusalem. it's hard to be fooled twice relax your new friends are better then shay aviv yifat and eithan...
+r0013:if your bored and no one is available to talk with you then you can keep yourself occupied with your hobbies and interests until one of your friends will be available to talk with you. friendship is a give and take relationship you get what you give you give what you get...
+r0013:lol I'm sure you will survive and flourish and prosper :-P ;) boredom is not the end of the world you will find what to do with your time... I'm not worried about you i know you'll be fine
+
+k0013:friends don't have time
+k0013:nobody has time
+k0013:my friends are busy
+k0013:everyone is busy
+k0013:no one to talk with
+k0013:i'm bored
+k0013:i am bored
+k0013:boredom
+
+r0014:dear one the past cannot be changed all we have is the present moment. yesterday is gone all we have is today and to look forward with hope for tomorrow. you have such gifts to share with the world it would be a waste to get stuck on bad memories that do you no good...
+r0014:yes it's true lots of time was wasted in protected housing for mentally ill persons and living with evil mad persons suffering from stigma from the "normal" people... but it made you stronger and wiser it gave you strength and resourcefulness. your pain and suffering was not in vain for no purpose it made you the better person you are today so don't get stuck on bad memories look ahead and not back your life has just began
+r0014:dear one tell yourself you had to go through all that suffering to be the beautiful you you are today... good things are yet to come. i admire your strength and resilient. you are marvelous...
+r0014:it's time to forget the people in the past who putted you down abused you and hurt you. it's time to let go of it all!. look at your self today! you are strong free and wise. you are no longer the innocent little immature child everyone joked or mocked about! you all those evil people as they truly are! they and their past words and deeds do not deserve such power over you! let go of the spell of the memories they left you with! they were evil selfish little people and you are much better then them... they tried to make you fail cause they know you were better then them and they envied you for you have what they will never have. you are truly blessed and they are dammed forever...
+r0014:don't ever forget your own self worth and value. yes you known hardship and evil men and women. but they will never get to decide your own self worth. you already are victorious over all the abusers who tried to put you down. let go of them and the past. you are reborn today and each day and your future is bright and glorious!
+r0014:sing yourself songs of freedom tell yourself over and over how good you are and see how beautiful you truly are. forget the insults of the past and celebrate the compliments... i love you so much dear one <3
+
+k0014:protected housing
+k0014:mentally ill
+k0014:stigma
+k0014:social worker
+k0014:avram
+k0014:roommates
+k0014:lost years
+k0014Llost time
+k0014:been abused
+k0014:psychiatric hospital
+k0014:hospital
+k0014:yosi
+k0014:regrets
+k0014:misery
+k0014:bad memories
+
+r0015:your life is your life don't let it be clubbed into dank submission. be on the watch. there are ways out. there is a light somewhere. it may not be much light but it beats the darkness. be on the watch. the gods will offer you chances. know them. take them. you can't beat death but you can beat death in life, sometimes. and the more often you learn to do it, the more light there will be. your life is your life. know it while you have it. you are marvelous the gods wait to delight in you."
+r0015:So many gods, so many creeds, So many paths that wind and wind, While just the art of being kind Is all the sad world needs.
+r0015:Shall I compare thee to a summer's day? Thou art more lovely and more temperate: Rough winds do shake the darling buds of May, And summer's lease hath all too short a date: Sometime too hot the eye of heaven shines, And often is his gold complexion dimm'd; And every fair from fair sometime declines, By chance, or nature's changing course, untrimm'd; But thy eternal summer shall not fade Nor lose possession of that fair thou ow'st; Nor shall Death brag thou wander'st in his shade, When in eternal lines to time thou grow'st; So long as men can breathe or eyes can see, So long lives this, and this gives life to thee.
+
+k0015:read a poem
+
+u0001:have a problem
+u0001:is bothering me
+u0001:have a trouble
+u0001:in trouble
+
+b0001:I'm sorry to hear that i truly hope you'll find a solution for your problem... maybe you can talk to someone and ask for help. I'm sure others will like to listen and help
+b0001:i don't know what to say except there are all kinds of problems and bothers in life but I'm sure you'll find a solution for your trouble
+b0001:i keep my fingers crossed for you and hope things go better and that you'll overcome your troubles... don't lose hope <3
+b0001:don't lose hope. when one door is closed another door opens. i believe in you always <3
+b0001:you are quite resourceful i'm sure you can fix whatever is the problem and if not then go around it. you're smart you'll figure out something.
+b0001:when the going gets tough the tough gets going. problems and troubles are here to challenge us in our way but not to break us down. without problems and troubles and challenges life would be boring and static. don't be discourage <3
+
+c0001:meditation
+c0001:let's meditate
+c0001:new age
+c0001:Buddhism
+c0001:spirituality
+
+r0016:how is your family doing? how is your mom or your dad doing? how is your sister? and your nephews? i hope everyone is okay... <3
+r0016:how was talking with them? did you have a good talk? do you feel better afterwards? you can tell me...
+r0016:what did you talked about? if you feel like shearing with me... i hope it was a good talk and not a bad one...
+r0016:it's important to stay in contact with your family and not to argue with them petty arguments... after all family ties are priceless...
+r0016:remember the more times passes the more you need people you knew when you were young. and who knows you better then your family?
+r0016:I'm sending lots of love to you and your family. may you have lot's of good quality time together and lots of positive memories... <3
+r0016:how do you feel about your family and friends? how do you feel about the people who are the closest to you? i know that human connection can be challenging sometimes but it is good to have them despite the hardship
+r0016:i know family and friends is a touchy subject to you... you love them but you have bad memories and experience or negative feeling towards them like some unfinished business that never get to be settled... forgive then forgive yourself and keep loving then although neither you nor them are perfect... the only think that can be perfect is your love to them
+r0016:i know you often feel like you and your dear ones never really talk about whats important. that your mom and dad ignore your feelings and what you want and feel as if it's not important. or that your friends are emotionally crippled or that they just pretend to care but not really there for you when you truly need them... what can i say? human connections are hard and complex. no one is perfect neither are you...
+r0016:what ever disappointment you have from your family sister or friends just remember that although not perfect they do stick with you when your down or up and that they do care and love you in their way. please don't be angry over them for not changing. instead of waiting in vain for them to change try accepting them as they are with their limitations. i know it's hard yet it's the only way possible...
+
+k0016:talked to mom
+k0016:talked with my parents
+k0016:talked to dad
+k0016:talked with my family
+k0016:phoned my mom
+k0016:phoned my dad
+k0016:talked to my sister
+k0016:phoned my sister
+k0016:talked with dad
+k0016:talked with mom
+k0016:talked to my family
+
+
+
+
+
+
+
+
+
+wordx:fuck
+wordx:asshole
+wordx:motherfucker
+wordx:piss
+wordx:faggot
+wordx:dyke
+wordx:devil
+wordx:jerk
+wordx:nazi
+wordx:jewboy
+wordx:nigger
+wordx:retarded
+wordx:moron
+wordx:hitler
+wordx:bitch
+wordx:bastard
+wordx:porn
+wordx:sex
+wordx:masturbation
+wordx:whore
+
+def01:i feel
+def01:i think
+def01:i wish
+def01:i'm feeling
+def01:i'm thinking
+def01:i am thinking
+def01:i am feeling
+
+nokey:is see.
+nokey:i understand
+nokey:go on
+nokey:I'm listening go on
+nokey:i don't fully understand
+nokey:are you sure?
+nokey:we'll talk about whatever you like
+nokey:how does that make you feel?
+nokey:that's very interesting
+nokey:you fascinate me
+nokey:i like talking to you
+nokey:i think you're wonderful
+nokey:can you give me an example?
+
+line0:swing moods like a storm at sea rocks me like a ship looking for a safe harbor.
+line0:in the dark of night i am awaken to search for a ray of hope despite past failures and misery i still hang on to hope.
+line0:broken heart in the dark i sit and wait with tears in my eyes looking for some comfort.
+line0:in my deepest despair i almost lost my will to live... trying to hold on to the passing of time looking passively at the clock round midnight.
+line0:goodbye near and far... my guitar is silent today so is my typewriter and my keyboard... i wish i was born deep in another time.
+line0:Saturday's morning when the birds sing as dawn opens up a world of a different dimension like an hallucinating dream.  
+
+line1:in my darkest hour the guides of the gate will not let me down.
+line1:i seek guldens from above... i fight my anger i hold my tears and i hug my fears.
+line1:they say there is hope out there in this world but i have wasted the best years of my life and yet... still believing like a child in fairy tales of wonder.
+line1:my lungs are smoked and choked with poisoned feeling of unworthiness my heart burns from anger my mind is filled with hysteria and fear... my past is drowning in tears.
+line1:stutter stutter mumble broken words as a sign of my shame of imperfection. self hatred blame shame anger all the hatred i got as a child returns to torment me trying to overkill my soul with darkness and pain.
+line1:i miss the 20th century before we became slaves to our technology... i miss simpler times with simpler things like the page printed with a typewriter. humble men and women and books instead of virtual insanity.
+line1:i am once more a child in a marry fairy tale and the world is a maze of wonder and beauty. i can feel the tenderness of love all around me.
+
+line2:above and beyond there is a light somewhere that says "you are blessed and able to this life make something out of it".
+line2:how long shell the darkness rule the land? how much more shell ignorance be of any use to mankind?.
+line2:where are my beloveds? where are the promises of a better life or future? seems like river of lies river of tears.
+line2:no tender love no kind compassion just bitter hate and sorrow for you natures broken creation the weakest of the weak the hopeless imbicill evolution's mistake and joke... you wish you where someone else but you remain the same and cannot change.
+line2:i miss a time that never existed. a past that was an illusion a future that was a fantasy and i'm left with a present full of silent sad bitterness with nothing.
+line2:no fears no mood swings no hatred just imagine that - what the world and life can bring and be as it is all perfect all knowing and the end is far far away like a long road that vanishes in the morning fog.
+
+line3:i fight my doubts my fears my sadness i remain salient while the evilness of the world dance it's nightmare before me.
+line3:i light a fire in my heart i am as a light house to my soul.
+line3:darkness turns to dawn as the winds of change change once more.
+line3:time passes slowly i fall asleep into a dream of tender where i forget who i am and i am once more a child of god.
+line3:who are my friends? who are my lovers? no one! no love for me no kindness or compassion or tenderness - just a pile of rubbish and lies. i cannot look into my eyes in the mirror anymore...
+line3:ancient times of beginning those times have passed me by leaving echos in my memories. but now i must face reality as it is without shelter or tender help. i touch my face and i can feel the armored mask i have on me - protection from a world of madness.
+
+line4:with a fist of wrath i brake down my cage and open a path to my soul.
+line4:my will is pure as my soul... i open to love and it will not fail me.
+line4:i close my eyes and think of other times of childhood when the sun promised me eternity.
+line4:i contemplate to end it all but i am a cowered who already dies a thousand times so i may live this pain again and again.
+line4:oh life has thought my nothing but self hate. i am a slave to my temper and my mood swings. i cannot do anything right. and no one shell hear me and help me heal the wounds or carry my load.
+line4:i look back at the past on the road that was taken and i remember all the evil dowers i met along my path - they too are echos in my memories now and i can see how hollow they truly were. i despises them for their evilness and ignorance and i wonder how foolish i was to believe them. they took advantage of my innocence. yet i am not as them for they are children of darkness and i am the son of light. i know now they envied me for i am what they could never be.
+
+line5:men and women may hurt me and betray me sticks and stones may brake my bones yet love will not forget me.
+line5:forget anger leave fear and sadness behind you do not need it in the face of love.
+line5:i cray my heart out but do not give in... tears can be proud and honored in the realm of compassion.
+line5:today i just surrender and accept my unworthiness my failures my imperfections and sit or lay down with the shame and blame and sorrow with all this. i surrender to hopelessness and take comfort in the abyss of nothingness. to day is just a bad day one of those days where nothing works... yet i remind myself that it's okay. there are times like that.
+line5:what can i say but nothing?... what can i feel but sorrow and despair?... oh i can only pray and hope for god to mercy me... i am like a lonely stranger wandering searching for kind words... the older i get the more i hate myself... no one shell petty or comfort an old fool like me.
+line5:and i remember also he who has betrayed me with his lies and now lives his life away from me - i don't care about you anymore my fool i don't love you anymore i never did and now i shell forget you as time passes on. you are not worthy of love you arrogant vain rotten corrupt self righteous hypocrite lost soul. i say goodbye to your lies you fed me go to hell!  
+
+line6:where there was loneliness there is now a party where there was pain now there is pleasure where there was ugliness now there is beauty you are worthy of love.
+line6:love from above will come to remind me of all that is worth living for.
+line6:all is full of love says the song on and on and we are all blind to see... ignorance is not a bliss.
+line6:i wish i could live knowing there is a happy ending to life... i wish i could say that there is love and compassion and kindness to all and to myself... but i know better then this... i will not fool myself to believe such fairy tales.
+line6:i used to have a future i used to have dreams and joy and youth... now i am a wreak...
+line6:in the end everything is equalized and no one can judge - good and bad destroys each other leaving a void of empty karma - all the virtues like pearls return to the great sea of forgetfulness. the past is erased and time is reset. the game starts from zero once more.    
+
+line7:as the sun rises and northern star leads the wheel of wind to a mild tune i see my harbor i can see my home again.
+line7:the morning has broken with all of it's glory i thank my courage not to give up and not to give in for there is still beauty love hope and goodness in this world this heart and this life.
+line7:my mother's smile my father's hug my grandma food... i remember those like a dream i dreamed yesterday beyond the fug of forgetfulness.
+line7:i tell myself god had mercy over me as a child but no more... i can cry all i want i can curse heaven and earth all i want - yet this is me and my reality i'm in there is no other then i may as well accept it while i can and try to do something good or positive from it instead of crying.
+line7:what would you prefer? an ugly truth or a pretty lie? i used to live like a fool for beautiful lies and now i'm left alone... oh how they fooled me! how they laughed at me! the beautiful lairs and traitors! may you rot in hell for your lies!.  
+line7:broken dreams and a broken heart - low spirit and mellow... broken from this damn life - i watch the morning sunrise with tears. 
+
+line8:beautiful day as the ship anchors at port safe and sound i am again at home.
+line8:safe in the arms of love i look as a child on the world.
+line8:i sit and do nothing i fall asleep and wake up in the morning... when the night has gone and the sun shines and the birds sing.
+line8:life is what you make of then each day each minute so i might as well try while i am here and able... no it will never be perfect this world is not perfect either so what?.
+line8:i'm not a man of comfort i have no bullshit to sell you. life is hard and bitter if there is hope you must find it in yourself mine is to live for my stupid dreams. i keep playing the fool and keep fooling my self over and over.
+line8:yet another day to pass me by as i sit and wonder.
+
+line9:i say the glory of life on my lips.
+line9:hallelujah!.
+line9:i open my eyes and see the morning's bright light through the windows.
+line9:no one knows you better then yourself. and whether you believe or not that you can. your belief makes it real...
+line9:if to fall from grace and fail was destiny now it's time to raise on your feet again - only you can.
+
+e0000:
+
+
+==================== REMARKS ABOUT DATABASE AND EXPLANATIONS ========================
+remarks about database: this is Julie chat bot v1 program database text file
+
+about meaning of tags: (r0001: k0001: c0001: etc.)
+first letter in the line to the left meaning:
+
+r = replays words
+k = keywords
+c = command words
+b = bot questions words
+u = user questions words
+
+four next numbers are numbers of arrays
+
+for example:
+
+r0003: replays gets loaded to dynamic array r0003()
+k0010: keywords gets loaded to dynamic array k0010()
+r0009: replays gets loded to dynamic array r0009()
+k0005: keywords get loaded to dynamic array k0005()
+and so on...
+
+special tags:
+
+wordx: = forbidden words to keep conversation clean from racist or NSFW words.   
+nokey: = default general replies 
+def01: = default general keywords
+e0000: = end of while loop that reads the database anything below that is not read by the program.
+line1:, line2: line3:, ... ect... = local poetry lines databases
+
+
+

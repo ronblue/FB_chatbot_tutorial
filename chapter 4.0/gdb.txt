@@ -1,0 +1,21 @@
+(gdb) (gdb) Breakpoint 1 at 0x401871: file D:\repo\FB_chatbot_Julie_v1\chatbot_julie_v1.bas, line 51.
+(gdb) Starting program: D:/repo/FB_chatbot_Julie_v1/fb_chatbot_julie_v1.exe 
+[New Thread 7072.0x5578]
+[New Thread 7072.0xc14]
+[New Thread 7072.0x4be8]
+[New Thread 7072.0x2cc4]
+[New Thread 7072.0x214c]
+[New Thread 7072.0x4b4]
+[New Thread 7072.0x2040]
+[New Thread 7072.0x1f44]
+[New Thread 7072.0x1edc]
+[New Thread 7072.0x5708]
+[New Thread 7072.0x2c3c]
+[New Thread 7072.0x1604]
+[New Thread 7072.0x3c40]
+[New Thread 7072.0x2218]
+[New Thread 7072.0x3c08]
+[Inferior 1 (process 7072) exited with code 030000000472]
+(gdb) No stack.
+(gdb) The program is not being run.
+(gdb) 

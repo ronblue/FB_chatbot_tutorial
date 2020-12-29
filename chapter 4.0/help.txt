@@ -1,0 +1,36 @@
+					Julie help - command list p.1
+
+1. if you'll talk about new age or meditation or spirituality
+Julie will open a YouTube URL for a meditation in your browser
+
+2. type "quit" to end conversation and exit program
+
+3. if you type "my name is Alex" or "my name is (whatever)" Julie will remember
+your name and will call you by your name...
+
+4. type "--help" to show this help/command list of chat bot Julie
+
+5. if you type "have problem" or "have a/in trouble" or "is bothering me" Julie
+will ask you what is bothering you and will remember it and will give you a 
+sympathetic reply...
+
+6. type "search google for (whatever)" and Julie will open google search for whatever you
+typed.
+
+7. be respectful and do not use NSFW words or curse words or racist words! otherwise
+the chat bot might close itself
+
+8. this chat bot is a learning one if it gets unknown input it will ask for the right
+replay from you and next time it will replay for the new input...
+
+9. all conversation are stored in "julie_log.txt" file as the history of your conversations.
+to delete "julie_log.txt" type "--delete log" and file will be deleted and also all learned
+new input/output will be erased as well (in files "answers.txt" and "questions.txt")
+
+10. you can only chat with the chatbot for 1 hour each time after 60 minutes the chatbot
+will close itself. this is to prevent over use and addictive chatting. recommended amount
+of chat time is one session peer day... you can check how much time is left to chat by
+typing "time left" and julie will tell you how many minutes is left till session is over
+you can add more time to the session (restart the countdown) by typing the command
+"more time"
+[press any key to next page...]

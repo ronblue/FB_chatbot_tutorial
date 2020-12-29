@@ -1,6 +1,6 @@
 [Project]
 Version=3
-Description=chapter 2.0
+Description=chapter 3.0
 Api=fb (FreeBASIC)
 [Make]
 Current=1
@@ -8,13 +8,16 @@ Current=1
 Recompile=2
 Module=Module Build,fbc -c
 [TabOrder]
-TabOrder=1,2
+TabOrder=1,2,3
 [File]
-1=databased_chatbot.bas
-2=database.txt
+1=learning_chatbot.bas
+2=answers.txt
+3=questions.txt
 [BreakPoint]
 1=
 2=
+3=
 [FileInfo]
-1=0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1=0,89,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 2=0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+3=0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
